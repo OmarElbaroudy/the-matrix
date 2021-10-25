@@ -1,6 +1,13 @@
 # Compiled class file
 *.class
 
+# Class path
+*.classpath
+
+
+#Project
+*.project
+
 # Log file
 *.log
 
@@ -27,3 +34,8 @@ hs_err_pid*
 
 #iml files
 TheMatrix.iml
+/.metadata/
+
+/.settings/
+
+
