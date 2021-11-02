@@ -2,9 +2,9 @@ package modules;
 
 import operators.Operator;
 
-public class Node {
+public class Node implements Comparable<Node> {
     private final State state;
-    private final Node parent;
+	  private final Node parent;
     private final Operator operator;
     private int depth, pathCost;
 
@@ -18,6 +18,12 @@ public class Node {
             this.pathCost = parent.pathCost + operator.getCost();
         }
     }
+  
+    @Override
+	  public int compareTo(Node node) {
+		  // TODO Auto-generated method stub
+		  return this.getPathCost() - node.getPathCost();
+	  }
 
     public State getState() {
         return state;

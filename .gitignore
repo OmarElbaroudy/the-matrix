@@ -27,7 +27,6 @@ hs_err_pid*
 
 #iml files
 TheMatrix.iml
-/bin/
 
 #eclipse files
 .classpath
