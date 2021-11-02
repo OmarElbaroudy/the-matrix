@@ -34,8 +34,9 @@ hs_err_pid*
 
 #iml files
 TheMatrix.iml
+
+#eclipse files
 /.metadata/
-
 /.settings/
-
-
+.classpath
+.project

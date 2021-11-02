@@ -1,9 +1,10 @@
 package modules;
 
 public class State implements Comparable<State>{
+    //for neo
     private int x, y;
-    private int health;
-    private int carry;
+    private int damage;
+    private int remCarry;
     private Grid grid;
 
     @Override
