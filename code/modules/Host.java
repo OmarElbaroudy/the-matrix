@@ -5,5 +5,6 @@ public enum Host {
     Agent,
     Hostage,
     Pad,
-    Pill;
+    Pill,
+    MutatedAgent;
 }

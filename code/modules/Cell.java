@@ -6,6 +6,7 @@ public class Cell {
     private int toX;
     private int toY;
 
+    //exception hostage, pad
     public Cell(Host host) {
         this.host = host;
     }

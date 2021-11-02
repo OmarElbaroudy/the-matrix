@@ -3,27 +3,53 @@ package modules;
 import operators.Operator;
 
 public class Node implements Comparable<Node> {
-    private State state;
-	private Node parent;
-    private Operator operator;
+    private final State state;
+	  private final Node parent;
+    private final Operator operator;
     private int depth, pathCost;
-    
-    public int getPathCost() {
-		return pathCost;
-	}
-	public void setPathCost(int pathCost) {
-		this.pathCost = pathCost;
-	}
-	public State getState() {
-		return state;
-	}
-	public void setState(State state) {
-		this.state = state;
-	}
-	@Override
-	public int compareTo(Node node) {
-		// TODO Auto-generated method stub
-		return this.getPathCost() - node.getPathCost();
-	}
 
+    public Node(State state, Node parent, Operator operator) {
+        this.state = state;
+        this.parent = parent;
+        this.operator = operator;
+
+        if (parent != null) { //TODO check access modifier problem
+            this.depth = parent.depth + 1;
+            this.pathCost = parent.pathCost + operator.getCost();
+        }
+    }
+  
+    @Override
+	  public int compareTo(Node node) {
+		  // TODO Auto-generated method stub
+		  return this.getPathCost() - node.getPathCost();
+	  }
+
+    public State getState() {
+        return state;
+    }
+
+    public Node getParent() {
+        return parent;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public int getPathCost() {
+        return pathCost;
+    }
+
+    public void setPathCost(int pathCost) {
+        this.pathCost = pathCost;
+    }
 }
