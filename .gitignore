@@ -1,6 +1,13 @@
 # Compiled class file
 *.class
 
+# Class path
+*.classpath
+
+
+#Project
+*.project
+
 # Log file
 *.log
 
@@ -29,5 +36,7 @@ hs_err_pid*
 TheMatrix.iml
 
 #eclipse files
+/.metadata/
+/.settings/
 .classpath
 .project
