@@ -4,9 +4,9 @@ import modules.Node;
 
 import java.util.List;
 
-public class HandleAgents extends Operator{
+public class HandleAgents extends Operator {
 
-    public HandleAgents(Operation operation, int cost){
+    public HandleAgents(Operation operation, Cost cost) {
         super(operation, cost);
     }
 

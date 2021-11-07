@@ -1,26 +1,26 @@
-package containers;
+package queues;
 
 import modules.Node;
 import modules.State;
+import operators.Cost;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
-public abstract class Container {
-    protected TreeMap<State, Integer> cost;
+public abstract class Queue {
+    protected HashMap<State, Cost> cost;
     protected Node root;
 
     public abstract boolean isEmpty();
 
     public abstract void add(List<Node> nodes);
 
-    public abstract Node poll();
+    public abstract Node removeFront();
 
-    public final void init(Node node) {
-        //TODO add state comparable
+    public final void makeQ(Node node) {
         root = node;
-        cost = new TreeMap<>();
+        cost = new HashMap<>();
         add(Collections.singletonList(node));
     }
 }

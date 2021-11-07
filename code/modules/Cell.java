@@ -1,5 +1,7 @@
 package modules;
 
+import java.util.Objects;
+
 public class Cell {
     private final Host host;
     private int damage;
@@ -38,4 +40,16 @@ public class Cell {
         return toY;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cell cell = (Cell) o;
+        return damage == cell.damage && toX == cell.toX && toY == cell.toY && host == cell.host;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(host, damage, toX, toY);
+    }
 }

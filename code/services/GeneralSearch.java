@@ -1,40 +1,75 @@
 package services;
 
-import containers.Container;
 import facade.Problem;
 import modules.Node;
 import modules.State;
+import operators.Operation;
 import operators.Operator;
+import queues.Queue;
 
 import java.util.List;
 import java.util.function.BiFunction;
 
 public class GeneralSearch {
 
-    public static void search(Problem problem,
-                              Container container,
-                              BiFunction<Node, List<Operator>, List<Node>> qingFunc) {
+    private static int kills, expandedNodes;
+    private static StringBuilder sol;
 
-        int expandedNodesCnt = 0;
+    public static String search(Problem problem,
+                                Queue queue,
+                                boolean visualize,
+                                BiFunction<Node, List<Operator>, List<Node>> qingFunc) {
+
         State initialState = problem.getInitialState();
         List<Operator> operators = problem.getOperators();
-        container.init(new Node(initialState, null, null));
+        queue.makeQ(new Node(initialState, null, null));
 
 
-        while (!container.isEmpty()) {
-            expandedNodesCnt++;
-            Node node = container.poll();
-
+        while (!queue.isEmpty()) {
+            Node node = queue.removeFront();
             if (problem.testGoal(node.getState())) {
-                //print solution
-                System.out.println(expandedNodesCnt);
-                return;
+
+                if (visualize) {
+                    printVisual(node);
+                }
+
+                return getSolution(node);
             }
 
-            container.add(qingFunc.apply(node, operators));
+            queue.add(qingFunc.apply(node, operators));
         }
-        //failure
+
+        return "failed to reach test goal!";
     }
 
+    private static String getSolution(Node node) {
+        kills = expandedNodes = 0;
+        sol = new StringBuilder();
+
+        getPlan(node);
+        sol.append(kills).append(", ").append(expandedNodes);
+
+        return sol.toString();
+    }
+
+    private static void getPlan(Node node) {
+        if (node.getParent() != null) {
+            expandedNodes++;
+            getPlan(node.getParent());
+
+            Operation op = node.getOperator().getOperation();
+            kills += (op == Operation.Kill) ? 1 : 0;
+            sol.append(op).append(", ");
+        }
+    }
+
+    private static void printVisual(Node node) {
+        if (node.getParent() != null) {
+            printVisual(node.getParent());
+            System.out.println(node.getOperator().getOperation());
+        }
+
+        System.out.println(node.getState());
+    }
 
 }

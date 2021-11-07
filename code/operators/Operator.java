@@ -6,14 +6,14 @@ import java.util.List;
 
 public abstract class Operator {
     protected Operation operation;
-    protected int cost;
+    protected Cost cost;
 
-    public abstract List<Node> expand(Node node);
-
-    protected Operator(Operation operation, int cost){
+    protected Operator(Operation operation, Cost cost) {
         this.operation = operation;
         this.cost = cost;
     }
+
+    public abstract List<Node> expand(Node node);
 
     @Override
     public final String toString() {
@@ -24,7 +24,7 @@ public abstract class Operator {
         return operation;
     }
 
-    public int getCost() {
+    public Cost getCost() {
         return cost;
     }
 }
