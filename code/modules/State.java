@@ -3,9 +3,8 @@ package modules;
 import services.VisualsHandler;
 
 import java.util.List;
-import java.util.Objects;
 
-public class State {
+public class State implements Comparable<State> {
     private final List<Integer> carriedDamages;
     private final Grid grid;
     private int damage;
@@ -81,22 +80,50 @@ public class State {
         return carriedDamages;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        State state = (State) o;
-        return x == state.x && y == state.y && damage == state.damage && remCarry == state.remCarry && grid.equals(state.grid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y, damage, remCarry, grid);
-    }
-
 
     @Override
     public String toString() {
         return VisualsHandler.visualize(this);
+    }
+
+    @Override
+    public int compareTo(State o) {
+
+        if (this.x != o.x) return Integer.compare(this.x, o.x);
+        if (this.y != o.y) return Integer.compare(this.y, o.y);
+        if (this.damage != o.damage) return Integer.compare(this.damage, o.damage);
+
+        int n = grid.getN(), m = grid.getM();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                Host fst = this.grid.getHostAtPos(i, j);
+                Host snd = o.grid.getHostAtPos(i, j);
+
+                if (fst != snd) {
+                    return fst.compareTo(snd);
+                }
+
+                if (fst == Host.HOSTAGE &&
+                        this.grid.getDamageAtPos(i, j) !=
+                                o.grid.getDamageAtPos(i, j)) {
+
+                    return Integer.compare(this.grid.getDamageAtPos(i, j),
+                            o.grid.getDamageAtPos(i, j));
+                }
+            }
+        }
+
+        if (this.carriedDamages.size() != o.carriedDamages.size()) {
+            return Integer.compare(
+                    this.carriedDamages.size(), o.carriedDamages.size());
+        }
+
+        for (int i = 0; i < this.carriedDamages.size(); i++) {
+            int x = this.getCarriedDamages().get(i);
+            int y = o.getCarriedDamages().get(i);
+            if (x == y) continue;
+            return Integer.compare(x, y);
+        }
+        return 0;
     }
 }

@@ -1,10 +1,10 @@
 package modules;
 
 public class Cost implements Comparable<Cost> {
+    //private int pills;
+    private final int depth;
     private int drops;
     private int kills;
-    //private int pills;
-    private int depth;
 
     public Cost() {
         drops = kills = 0;
@@ -24,14 +24,6 @@ public class Cost implements Comparable<Cost> {
 
     public Cost kill() {
         kills++;
-        return this;
-    }
-
-    public Cost add(Cost o) {
-        this.depth += o.depth;
-        this.kills += o.kills;
-        this.drops += o.drops;
-
         return this;
     }
 

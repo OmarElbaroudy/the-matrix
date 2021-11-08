@@ -44,18 +44,5 @@ public class Cell {
         this.damage = Math.max(0, damage - 20);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cell cell = (Cell) o;
-        return damage == cell.damage && toX == cell.toX && toY == cell.toY && host == cell.host;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(host, damage, toX, toY);
-    }
-
 
 }

@@ -1,15 +1,15 @@
 package queues;
 
+import modules.Cost;
 import modules.Node;
 import modules.State;
-import modules.Cost;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 public abstract class Queue {
-    protected HashMap<State, Cost> mp;
+    protected TreeMap<State, Cost> mp;
     protected Node root;
 
     public abstract boolean isEmpty();
@@ -20,7 +20,7 @@ public abstract class Queue {
 
     public final void makeQ(Node node) {
         root = node;
-        mp = new HashMap<>();
+        mp = new TreeMap<>();
         add(Collections.singletonList(node));
     }
 }
