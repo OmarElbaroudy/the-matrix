@@ -21,10 +21,13 @@ public class Matrix extends Problem {
         Grid grid = state.getGrid();
         int n = grid.getN(), m = grid.getM();
 
+        if (!state.getCarriedDamages().isEmpty()) {
+            return false;
+        }
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 Host host = grid.getHostAtPos(i, j);
-
                 if (host == Host.MUTATED_AGENT
                         || host == Host.HOSTAGE) {
                     return false;

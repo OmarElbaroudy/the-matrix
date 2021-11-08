@@ -30,7 +30,7 @@ public abstract class Operator {
                 if (type == Host.HOSTAGE) {
                     int damage = curGrid.getDamageAtPos(i, j);
 
-                    if (damage >= 100) {
+                    if (damage + 2 < 100) {
                         newGrid[i][j] = new Cell(damage + 2);
                     } else {
                         newGrid[i][j] = new Cell(Host.MUTATED_AGENT);

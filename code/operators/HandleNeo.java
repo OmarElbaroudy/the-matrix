@@ -94,6 +94,11 @@ public class HandleNeo extends Operator {
     private List<Node> fly(Node parent, State cur) {
         Host type = cur.getGrid().getHostAtPos(cur.getX(), cur.getY());
 
+        if (parent.getOperator() != null &&
+                parent.getOperator().getOperation() == Operation.FLY) {
+            return new ArrayList<>();
+        }
+
         if (type != Host.PAD) {
             return new ArrayList<>();
         }
@@ -127,8 +132,8 @@ public class HandleNeo extends Operator {
     }
 
     private boolean isValid(State state, int dx, int dy) {
-        int x = state.getX() + dx;
-        int y = state.getY() + dy;
+        int x = state.getX() + dy;
+        int y = state.getY() + dx;
         int n = state.getGrid().getN();
         int m = state.getGrid().getM();
 

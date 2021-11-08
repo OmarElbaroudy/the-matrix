@@ -3,6 +3,7 @@ package modules;
 public class Cost implements Comparable<Cost> {
     private int drops;
     private int kills;
+    //private int pills;
     private int depth;
 
     public Cost() {

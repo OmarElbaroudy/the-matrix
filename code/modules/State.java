@@ -22,8 +22,8 @@ public class State {
     }
 
     public void move(int dx, int dy) {
-        this.x += dx;
-        this.y += dy;
+        this.x += dy;
+        this.y += dx;
     }
 
     public void transform(int x, int y) {
@@ -33,6 +33,7 @@ public class State {
 
     public void carry(int x, int y) {
         this.remCarry -= 1;
+        this.carriedDamages.add(getGrid().getDamageAtPos(x, y));
         grid.clearPos(x, y);
     }
 
