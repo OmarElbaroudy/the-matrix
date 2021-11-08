@@ -1,17 +1,62 @@
 package operators;
 
+import modules.Host;
 import modules.Node;
+import modules.State;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class HandleHostages extends Operator{
+public class HandleHostages extends Operator {
 
-    public HandleHostages(Operation operation, int cost){
+    public HandleHostages(Operation operation, Cost cost) {
         super(operation, cost);
     }
 
     @Override
     public List<Node> expand(Node node) {
-        return null;
+        if (getNextState(node.getState()) == null) {
+            return new ArrayList<>();
+        }
+
+        List<Node> ret = new ArrayList<>();
+
+        ret.addAll(carry(node, getNextState(node.getState())));
+        ret.addAll(drop(node, getNextState(node.getState())));
+
+        return ret;
+    }
+
+    private List<Node> carry(Node parent, State cur) {
+        if (!canCarry(cur)) {
+            return new ArrayList<>();
+        }
+
+        cur.carry(cur.getX(), cur.getY());
+        Operator operator = new HandleHostages(Operation.Carry, new Cost());
+        Node node = new Node(cur, parent, operator);
+        return Collections.singletonList(node);
+    }
+
+    private List<Node> drop(Node parent, State cur) {
+        if (!canDrop(cur)) {
+            return new ArrayList<>();
+        }
+
+        Cost c = new Cost().drop(cur.drop());
+        Operator operator = new HandleHostages(Operation.Drop, c);
+        Node node = new Node(cur, parent, operator);
+        return Collections.singletonList(node);
+    }
+
+    private boolean canCarry(State state) {
+        Host type = state.getGrid().getHostAtPos(state.getX(), state.getY());
+        return type == Host.Hostage && state.getRemCarry() > 0;
+    }
+
+    private boolean canDrop(State state) {
+        Host type = state.getGrid().getHostAtPos(state.getX(), state.getY());
+        return type == Host.Telephone && !state.getCarriedDamages().isEmpty();
     }
 }

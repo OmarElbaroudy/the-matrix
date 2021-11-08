@@ -16,18 +16,22 @@ public class Cost implements Comparable<Cost> {
         this.kills = pathCost.kills + cost.kills;
     }
 
-    public void drop(int x) {
+    public Cost drop(int x) {
         drops += x;
+        return this;
     }
 
-    public void kill() {
+    public Cost kill() {
         kills++;
+        return this;
     }
 
-    public void add(Cost o) {
+    public Cost add(Cost o) {
         this.depth += o.depth;
         this.kills += o.kills;
         this.drops += o.drops;
+
+        return this;
     }
 
 

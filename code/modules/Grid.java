@@ -9,12 +9,21 @@ public class Grid {
         this.grid = grid;
     }
 
+
     public Host getHostAtPos(int x, int y) {
         return this.grid[x][y].getHost();
     }
 
-    public boolean isAlive(int x, int y) {
-        return this.grid[x][y].getDamage() < 100;
+    public int getDamageAtPos(int x, int y) {
+        return this.grid[x][y].getDamage();
+    }
+
+    public int getPadXAtPos(int x, int y) {
+        return this.grid[x][y].getToX();
+    }
+
+    public int getPadYAtPos(int x, int y) {
+        return this.grid[x][y].getToY();
     }
 
     public int getN() {
@@ -23,6 +32,14 @@ public class Grid {
 
     public int getM() {
         return grid[0].length;
+    }
+
+    public void clearPos(int x, int y) {
+        grid[x][y] = new Cell(Host.Empty);
+    }
+
+    public void heal(int x, int y) {
+        grid[x][y].heal();
     }
 
     @Override

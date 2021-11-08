@@ -40,6 +40,10 @@ public class Cell {
         return toY;
     }
 
+    public void heal() {
+        this.damage = Math.max(0, damage - 20);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,4 +56,6 @@ public class Cell {
     public int hashCode() {
         return Objects.hash(host, damage, toX, toY);
     }
+
+
 }

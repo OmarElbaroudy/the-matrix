@@ -3,6 +3,9 @@ package facade;
 import modules.Grid;
 import modules.Host;
 import modules.State;
+import operators.HandleAgents;
+import operators.HandleHostages;
+import operators.HandleNeo;
 
 import java.util.ArrayList;
 
@@ -23,7 +26,7 @@ public class Matrix extends Problem {
                 Host host = grid.getHostAtPos(i, j);
 
                 if (host == Host.MutatedAgent
-                        || host == Host.Hostage){
+                        || host == Host.Hostage) {
                     return false;
                 }
             }
@@ -34,6 +37,9 @@ public class Matrix extends Problem {
 
     private void initOperators() {
         this.operators = new ArrayList<>();
+        operators.add(new HandleNeo(null, null));
+        operators.add(new HandleAgents(null, null));
+        operators.add(new HandleHostages(null, null));
     }
 
 }
