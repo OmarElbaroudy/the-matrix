@@ -17,10 +17,6 @@ public abstract class Operator {
     public abstract List<Node> expand(Node node);
 
     protected State getNextState(State cur) {
-        if (cur.getDamage() + 2 >= 100) {
-            return null;
-        }
-
         int n = cur.getGrid().getN();
         int m = cur.getGrid().getM();
 
@@ -61,7 +57,7 @@ public abstract class Operator {
         return new StateBuilder().
                 Grid(new Grid(newGrid)).
                 remCarry(cur.getRemCarry()).
-                damage(cur.getDamage() + 2).
+                damage(cur.getDamage()).
                 carriedDamages(newCarriedDamages).
                 xPos(cur.getX()).
                 yPos(cur.getY()).

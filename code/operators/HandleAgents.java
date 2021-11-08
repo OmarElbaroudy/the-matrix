@@ -17,10 +17,6 @@ public class HandleAgents extends Operator {
 
     @Override
     public List<Node> expand(Node node) {
-        if (getNextState(node.getState()) == null) {
-            return new ArrayList<>();
-        }
-
         int[] dx = new int[]{0, 0, -1, 1};
         int[] dy = new int[]{-1, 1, 0, 0};
 
@@ -36,7 +32,7 @@ public class HandleAgents extends Operator {
             return new ArrayList<>();
         }
 
-        if(!cur.kill()){
+        if (!cur.kill()) {
             return new ArrayList<>();
         }
 

@@ -12,7 +12,6 @@ import java.util.function.BiFunction;
 public class Main {
 
     public static String solve(String grid, String strategy, boolean visualize) {
-
         Problem matrix = new Matrix(GridHandler.toState(grid));
         BiFunction<Node, List<Operator>, List<Node>> qingFunc = matrix::expand;
 
@@ -21,7 +20,7 @@ public class Main {
     }
 
     public static String genGrid() {
-        return null;
+        return GridHandler.genGrid();
     }
 
     public static void main(String[] args) {
@@ -43,7 +42,7 @@ public class Main {
                 return new UniformCost();
             default:
                 int i = strategy.charAt(strategy.length() - 1) - '0';
-                if(strategy.charAt(0) == 'G')  return new Greedy(i);
+                if (strategy.charAt(0) == 'G') return new Greedy(i);
                 return new AStar(i);
         }
     }

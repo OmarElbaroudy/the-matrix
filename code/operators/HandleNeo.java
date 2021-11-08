@@ -14,10 +14,6 @@ public class HandleNeo extends Operator {
 
     @Override
     public List<Node> expand(Node node) {
-        if (getNextState(node.getState()) == null) {
-            return new ArrayList<>();
-        }
-
         List<Node> ret = new ArrayList<>();
 
         ret.addAll(moveUp(node, getNextState(node.getState())));

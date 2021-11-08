@@ -17,10 +17,6 @@ public class HandleHostages extends Operator {
 
     @Override
     public List<Node> expand(Node node) {
-        if (getNextState(node.getState()) == null) {
-            return new ArrayList<>();
-        }
-
         List<Node> ret = new ArrayList<>();
 
         ret.addAll(carry(node, getNextState(node.getState())));
