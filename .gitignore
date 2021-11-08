@@ -40,3 +40,6 @@ TheMatrix.iml
 /.settings/
 .classpath
 .project
+
+#output folder
+out/

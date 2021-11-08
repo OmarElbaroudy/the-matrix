@@ -42,6 +42,14 @@ public class GridHandler {
             grid[stX[i]][stY[i]] = new Cell(fiX[i], fiY[i]);
         }
 
+        for (int i = 0; i < ie.getHeight(); i++) {
+            for (int j = 0; j < ie.getWidth(); j++) {
+                if (grid[i][j] == null) {
+                    grid[i][j] = new Cell(Host.EMPTY);
+                }
+            }
+        }
+
         return new StateBuilder()
                 .carriedDamages(new ArrayList<>())
                 .remCarry(ie.getCarrySize())
