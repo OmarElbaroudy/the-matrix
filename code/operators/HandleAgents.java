@@ -1,5 +1,6 @@
 package operators;
 
+import modules.Cost;
 import modules.Host;
 import modules.Node;
 import modules.State;
@@ -40,7 +41,7 @@ public class HandleAgents extends Operator {
         }
 
         cur.clearPos(cur.getX() + dx, cur.getY() + dy);
-        Operator operator = new HandleAgents(Operation.Kill, new Cost().kill());
+        Operator operator = new HandleAgents(Operation.KILL, new Cost().kill());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -53,7 +54,7 @@ public class HandleAgents extends Operator {
 
         if (x >= 0 && x < n && y >= 0 && y < m) {
             Host type = state.getGrid().getHostAtPos(x, y);
-            return type == Host.Agent || type == Host.MutatedAgent;
+            return type == Host.AGENT || type == Host.MUTATED_AGENT;
         }
 
         return false;

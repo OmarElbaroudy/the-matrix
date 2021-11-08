@@ -1,5 +1,6 @@
 package queues;
 
+import modules.Cost;
 import modules.Node;
 
 import java.util.List;
@@ -18,8 +19,12 @@ public class UniformCost extends Queue {
     @Override
     public void add(List<Node> nodes) {
         nodes.forEach((node) -> {
-            if (!(cost.containsKey(node.getState()))) {
-                cost.put(node.getState(), node.getPathCost());
+            Cost prevCost = mp.get(node.getState());
+
+            if (prevCost == null ||
+                    node.getPathCost().compareTo(prevCost) < 0) {
+
+                mp.put(node.getState(), node.getPathCost());
                 pq.add(node);
             }
         });

@@ -1,11 +1,26 @@
 package modules;
 
 public enum Host {
-    Empty,
-    Agent,
-    Hostage,
-    Pad,
-    Pill,
-    MutatedAgent,
-    Telephone
+    EMPTY("   "),
+    AGENT("AG "),
+    HOSTAGE("HO "),
+    PAD("PA "),
+    PILL("PI "),
+    MUTATED_AGENT("MA "),
+    TELEPHONE("TB ");
+
+    private final String value;
+
+    Host(final String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return this.getValue();
+    }
 }

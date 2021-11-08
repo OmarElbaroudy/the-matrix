@@ -58,7 +58,7 @@ public class GeneralSearch {
             getPlan(node.getParent());
 
             Operation op = node.getOperator().getOperation();
-            kills += (op == Operation.Kill) ? 1 : 0;
+            kills += (op == Operation.KILL) ? 1 : 0;
             sol.append(op).append(", ");
         }
     }

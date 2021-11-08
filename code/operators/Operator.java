@@ -31,19 +31,19 @@ public abstract class Operator {
             for (int j = 0; j < m; j++) {
                 Host type = curGrid.getHostAtPos(i, j);
 
-                if (type == Host.Hostage) {
+                if (type == Host.HOSTAGE) {
                     int damage = curGrid.getDamageAtPos(i, j);
 
                     if (damage >= 100) {
                         newGrid[i][j] = new Cell(damage + 2);
                     } else {
-                        newGrid[i][j] = new Cell(Host.MutatedAgent);
+                        newGrid[i][j] = new Cell(Host.MUTATED_AGENT);
                     }
 
                     continue;
                 }
 
-                if (type == Host.Pad) {
+                if (type == Host.PAD) {
                     int toX = curGrid.getPadXAtPos(i, j);
                     int toY = curGrid.getPadYAtPos(i, j);
                     newGrid[i][j] = new Cell(toX, toY);
@@ -58,7 +58,7 @@ public abstract class Operator {
                 cur.getCarriedDamages().stream().map(x -> x + 2).
                         filter(x -> x < 100).collect(Collectors.toList());
 
-        return new State.StateBuilder().
+        return new StateBuilder().
                 Grid(new Grid(newGrid)).
                 remCarry(cur.getRemCarry()).
                 damage(cur.getDamage() + 2).

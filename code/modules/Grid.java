@@ -35,7 +35,7 @@ public class Grid {
     }
 
     public void clearPos(int x, int y) {
-        grid[x][y] = new Cell(Host.Empty);
+        grid[x][y] = new Cell(Host.EMPTY);
     }
 
     public void heal(int x, int y) {

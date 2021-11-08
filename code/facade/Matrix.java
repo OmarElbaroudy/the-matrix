@@ -25,8 +25,8 @@ public class Matrix extends Problem {
             for (int j = 0; j < m; j++) {
                 Host host = grid.getHostAtPos(i, j);
 
-                if (host == Host.MutatedAgent
-                        || host == Host.Hostage) {
+                if (host == Host.MUTATED_AGENT
+                        || host == Host.HOSTAGE) {
                     return false;
                 }
             }

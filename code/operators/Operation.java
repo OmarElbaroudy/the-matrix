@@ -1,15 +1,15 @@
 package operators;
 
 public enum Operation {
-    Up("up"),
-    Down("down"),
-    Left("left"),
-    Right("right"),
-    Fly("fly"),
-    TakePill("takePill"),
-    Kill("kill"),
-    Carry("carry"),
-    Drop("drop");
+    UP("up"),
+    DOWN("down"),
+    LEFT("left"),
+    RIGHT("right"),
+    FLY("fly"),
+    TAKE_PILL("takePill"),
+    KILL("kill"),
+    CARRY("carry"),
+    DROP("drop");
 
     private final String value;
 

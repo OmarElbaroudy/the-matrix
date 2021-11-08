@@ -16,12 +16,11 @@ public class DepthFirst extends Queue {
     @Override
     public void add(List<Node> nodes) {
         nodes.forEach((node) -> {
-            if (!cost.containsKey(node.getState())) {
-                cost.put(node.getState(), node.getPathCost());
+            if (!mp.containsKey(node.getState())) {
+                mp.put(node.getState(), node.getPathCost());
                 st.push(node);
             }
         });
-
     }
 
     @Override

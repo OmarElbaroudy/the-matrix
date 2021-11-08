@@ -1,4 +1,4 @@
-package operators;
+package modules;
 
 public class Cost implements Comparable<Cost> {
     private int drops;
@@ -34,6 +34,9 @@ public class Cost implements Comparable<Cost> {
         return this;
     }
 
+    public int getDepth() {
+        return depth;
+    }
 
     @Override
     public int compareTo(Cost o) {

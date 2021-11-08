@@ -14,12 +14,12 @@ public class Cell {
     }
 
     public Cell(int damage) {
-        this.host = Host.Hostage;
+        this.host = Host.HOSTAGE;
         this.damage = damage;
     }
 
     public Cell(int toX, int toY) {
-        this.host = Host.Pad;
+        this.host = Host.PAD;
         this.toX = toX;
         this.toY = toY;
     }

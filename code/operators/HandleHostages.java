@@ -1,5 +1,6 @@
 package operators;
 
+import modules.Cost;
 import modules.Host;
 import modules.Node;
 import modules.State;
@@ -34,7 +35,7 @@ public class HandleHostages extends Operator {
         }
 
         cur.carry(cur.getX(), cur.getY());
-        Operator operator = new HandleHostages(Operation.Carry, new Cost());
+        Operator operator = new HandleHostages(Operation.CARRY, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -45,18 +46,18 @@ public class HandleHostages extends Operator {
         }
 
         Cost c = new Cost().drop(cur.drop());
-        Operator operator = new HandleHostages(Operation.Drop, c);
+        Operator operator = new HandleHostages(Operation.DROP, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
 
     private boolean canCarry(State state) {
         Host type = state.getGrid().getHostAtPos(state.getX(), state.getY());
-        return type == Host.Hostage && state.getRemCarry() > 0;
+        return type == Host.HOSTAGE && state.getRemCarry() > 0;
     }
 
     private boolean canDrop(State state) {
         Host type = state.getGrid().getHostAtPos(state.getX(), state.getY());
-        return type == Host.Telephone && !state.getCarriedDamages().isEmpty();
+        return type == Host.TELEPHONE && !state.getCarriedDamages().isEmpty();
     }
 }

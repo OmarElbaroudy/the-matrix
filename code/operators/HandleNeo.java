@@ -32,7 +32,7 @@ public class HandleNeo extends Operator {
 
     private List<Node> moveUp(Node parent, State cur) {
         if (parent.getOperator() != null &&
-                parent.getOperator().getOperation() == Operation.Down) {
+                parent.getOperator().getOperation() == Operation.DOWN) {
             return new ArrayList<>();
         }
 
@@ -41,14 +41,14 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(0, 1);
-        Operator operator = new HandleNeo(Operation.Up, new Cost());
+        Operator operator = new HandleNeo(Operation.UP, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
 
     private List<Node> moveDown(Node parent, State cur) {
         if (parent.getOperator() != null &&
-                parent.getOperator().getOperation() == Operation.Up) {
+                parent.getOperator().getOperation() == Operation.UP) {
             return new ArrayList<>();
         }
 
@@ -57,14 +57,14 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(0, -1);
-        Operator operator = new HandleNeo(Operation.Down, new Cost());
+        Operator operator = new HandleNeo(Operation.DOWN, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
 
     private List<Node> moveRight(Node parent, State cur) {
         if (parent.getOperator() != null &&
-                parent.getOperator().getOperation() == Operation.Left) {
+                parent.getOperator().getOperation() == Operation.LEFT) {
             return new ArrayList<>();
         }
 
@@ -73,7 +73,7 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(1, 0);
-        Operator operator = new HandleNeo(Operation.Right, new Cost());
+        Operator operator = new HandleNeo(Operation.RIGHT, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -81,7 +81,7 @@ public class HandleNeo extends Operator {
 
     private List<Node> moveLeft(Node parent, State cur) {
         if (parent.getOperator() != null &&
-                parent.getOperator().getOperation() == Operation.Right) {
+                parent.getOperator().getOperation() == Operation.RIGHT) {
             return new ArrayList<>();
         }
 
@@ -90,7 +90,7 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(-1, 0);
-        Operator operator = new HandleNeo(Operation.Left, new Cost());
+        Operator operator = new HandleNeo(Operation.LEFT, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -98,12 +98,12 @@ public class HandleNeo extends Operator {
     private List<Node> fly(Node parent, State cur) {
         Host type = cur.getGrid().getHostAtPos(cur.getX(), cur.getY());
 
-        if (type != Host.Pad) {
+        if (type != Host.PAD) {
             return new ArrayList<>();
         }
 
         cur.transform(cur.getX(), cur.getY());
-        Operator operator = new HandleNeo(Operation.Fly, new Cost());
+        Operator operator = new HandleNeo(Operation.FLY, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -111,7 +111,7 @@ public class HandleNeo extends Operator {
     private List<Node> takePill(Node parent, State cur) {
         Host type = cur.getGrid().getHostAtPos(cur.getX(), cur.getY());
 
-        if (type != Host.Pill) {
+        if (type != Host.PILL) {
             return new ArrayList<>();
         }
 
@@ -125,7 +125,7 @@ public class HandleNeo extends Operator {
 
         cur.healNeo();
         cur.clearPos(cur.getX(), cur.getY());
-        Operator operator = new HandleNeo(Operation.TakePill, new Cost());
+        Operator operator = new HandleNeo(Operation.TAKE_PILL, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -138,7 +138,7 @@ public class HandleNeo extends Operator {
 
         if (x >= 0 && x < n && y >= 0 && y < m) {
             Host type = state.getGrid().getHostAtPos(x, y);
-            return type != Host.Agent && type != Host.MutatedAgent;
+            return type != Host.AGENT && type != Host.MUTATED_AGENT;
         }
 
         return false;

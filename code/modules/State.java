@@ -1,5 +1,7 @@
 package modules;
 
+import services.VisualsHandler;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -92,45 +94,8 @@ public class State {
     }
 
 
-    public static class StateBuilder {
-        private int x, y;
-        private int damage;
-        private int remCarry;
-        private Grid grid;
-        private List<Integer> carriedDamages;
-
-        public StateBuilder xPos(int x) {
-            this.x = x;
-            return this;
-        }
-
-        public StateBuilder yPos(int y) {
-            this.y = y;
-            return this;
-        }
-
-        public StateBuilder damage(int damage) {
-            this.damage = damage;
-            return this;
-        }
-
-        public StateBuilder remCarry(int remCarry) {
-            this.remCarry = remCarry;
-            return this;
-        }
-
-        public StateBuilder Grid(Grid grid) {
-            this.grid = grid;
-            return this;
-        }
-
-        public StateBuilder carriedDamages(List<Integer> carriedDamages) {
-            this.carriedDamages = carriedDamages;
-            return this;
-        }
-
-        public State build() {
-            return new State(this);
-        }
+    @Override
+    public String toString() {
+        return VisualsHandler.visualize(this);
     }
 }
