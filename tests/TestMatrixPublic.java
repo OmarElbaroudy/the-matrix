@@ -261,7 +261,7 @@ public class TestMatrixPublic {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid6, solution));
     }
 
-    @Test(timeout = 60000) //RTE probably
+    @Test(timeout = 60000) //Failed to reach test Goal
     @Ignore
     public void testb7() throws Exception {
         String solution = Main.solve(grid7, "DF", false);
@@ -297,67 +297,63 @@ public class TestMatrixPublic {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid11, solution));
     }
 
-    @Test(timeout = 120000)
-    @Ignore
+    @Test(timeout = 120000) //AC
     public void testc0() throws Exception {
         String solution = Main.solve(grid0, "UC", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid0, solution));
     }
 
-    @Test(timeout = 70000)
-    @Ignore
+    @Test(timeout = 70000) //AC
     public void testc1() throws Exception {
         String solution = Main.solve(grid1, "UC", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid1, solution));
     }
 
-    @Test(timeout = 70000)
+    @Test(timeout = 70000) //AC
     public void testc2() throws Exception {
         String solution = Main.solve(grid2, "UC", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid2, solution));
     }
 
-    @Test(timeout = 120000)
+    @Test(timeout = 120000) //AC
     public void testc3() throws Exception {
         String solution = Main.solve(grid3, "UC", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid3, solution));
     }
 
-    @Test(timeout = 500000)
+    @Test(timeout = 500000) //AC
     public void testc4() throws Exception {
         String solution = Main.solve(grid4, "UC", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid4, solution));
     }
 
-    @Test(timeout = 70000)
-    @Ignore
+    @Test(timeout = 70000) //AC
     public void testc5() throws Exception {
         String solution = Main.solve(grid5, "UC", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid5, solution));
     }
 
-    @Test(timeout = 10000)
-    @Ignore
+    @Test(timeout = 10000) //AC
     public void testd0() throws Exception {
         String solution = Main.solve(grid0, "ID", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid0, solution));
     }
 
-    @Test(timeout = 10000)
+    @Test(timeout = 10000) //AC
     public void testd1() throws Exception {
         String solution = Main.solve(grid1, "ID", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid1, solution));
     }
 
-    @Test(timeout = 10000)
+    @Test(timeout = 10000) //TLE
     @Ignore
     public void testd2() throws Exception {
         String solution = Main.solve(grid2, "ID", false);
@@ -365,14 +361,14 @@ public class TestMatrixPublic {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid2, solution));
     }
 
-    @Test(timeout = 10000)
+    @Test(timeout = 10000) //AC
     public void testd3() throws Exception {
         String solution = Main.solve(grid3, "ID", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid3, solution));
     }
 
-    @Test(timeout = 120000)
+    @Test(timeout = 120000) //TLE
     @Ignore
     public void testd4() throws Exception {
         String solution = Main.solve(grid4, "ID", false);
@@ -380,8 +376,7 @@ public class TestMatrixPublic {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid4, solution));
     }
 
-    @Test(timeout = 60000)
-    @Ignore
+    @Test(timeout = 60000) //AC
     public void testd5() throws Exception {
         String solution = Main.solve(grid5, "ID", false);
         solution = solution.replace(" ", "");

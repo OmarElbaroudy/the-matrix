@@ -127,6 +127,8 @@ public class HandleNeo extends Operator {
         }
 
         cur.healNeo();
+        cur.healCarriedHostages();
+
         cur.clearPos(cur.getX(), cur.getY());
         Operator operator = new HandleNeo(Operation.TAKE_PILL, new Cost());
         Node node = new Node(cur, parent, operator);

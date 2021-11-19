@@ -55,6 +55,14 @@ public class State implements Comparable<State> {
         this.damage = Math.max(0, damage - 20);
     }
 
+    public void healCarriedHostages() {
+        for (int i = 0; i < this.carriedDamages.size(); i++) {
+            int x = carriedDamages.get(i);
+            if (x == 100) continue;
+            carriedDamages.set(i, Math.max(0, x - 22));
+        }
+    }
+
     public boolean kill() {
         this.damage += 20;
         return damage < 100;

@@ -16,11 +16,11 @@ public class IterativeDeepening extends Queue {
             return false;
         }
 
-        if (curDepth == MAX_DEPTH) {
+        if (curDepth >= MAX_DEPTH) {
             return true;
         }
 
-        curDepth++;
+        curDepth += 3;
         makeQ(root);
         return false;
     }
