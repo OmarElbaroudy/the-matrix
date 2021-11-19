@@ -22,7 +22,7 @@ public class HandleHostages extends Operator {
         ret.addAll(carry(node, getNextState(node.getState())));
         ret.addAll(drop(node, getNextState(node.getState())));
 
-        return ret;
+        return super.filterInvalidNodes(ret);
     }
 
     private List<Node> carry(Node parent, State cur) {

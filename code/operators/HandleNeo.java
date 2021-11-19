@@ -16,14 +16,14 @@ public class HandleNeo extends Operator {
     public List<Node> expand(Node node) {
         List<Node> ret = new ArrayList<>();
 
+        ret.addAll(takePill(node, getNextState(node.getState())));
         ret.addAll(moveUp(node, getNextState(node.getState())));
         ret.addAll(moveDown(node, getNextState(node.getState())));
         ret.addAll(moveLeft(node, getNextState(node.getState())));
         ret.addAll(moveRight(node, getNextState(node.getState())));
-        ret.addAll(takePill(node, getNextState(node.getState())));
         ret.addAll(fly(node, getNextState(node.getState())));
 
-        return ret;
+        return super.filterInvalidNodes(ret);
     }
 
     private List<Node> moveUp(Node parent, State cur) {
@@ -32,11 +32,11 @@ public class HandleNeo extends Operator {
             return new ArrayList<>();
         }
 
-        if (!isValid(cur, 0, 1)) {
+        if (!isValid(cur, 0, -1)) {
             return new ArrayList<>();
         }
 
-        cur.move(0, 1);
+        cur.move(0, -1);
         Operator operator = new HandleNeo(Operation.UP, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
@@ -48,11 +48,11 @@ public class HandleNeo extends Operator {
             return new ArrayList<>();
         }
 
-        if (!isValid(cur, 0, -1)) {
+        if (!isValid(cur, 0, 1)) {
             return new ArrayList<>();
         }
 
-        cur.move(0, -1);
+        cur.move(0, 1);
         Operator operator = new HandleNeo(Operation.DOWN, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
@@ -118,9 +118,11 @@ public class HandleNeo extends Operator {
 
         Grid grid = cur.getGrid();
         int n = grid.getN(), m = grid.getM();
+        Grid parentGrid = parent.getState().getGrid();
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                grid.heal(i, j);
+                grid.heal(i, j, parentGrid.getDamageAtPos(i,j));
             }
         }
 

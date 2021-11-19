@@ -24,7 +24,7 @@ public class VisualsHandler {
         int n = state.getGrid().getN();
         int m = state.getGrid().getM();
 
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 String s = getCellVisual(state, i, j);
                 sb.append(equalize(s, false)).append("| ");
@@ -95,4 +95,24 @@ public class VisualsHandler {
         }
         return ret;
     }
+
+    public static int getDeaths(Node goal, State initialState) {
+        int n = initialState.getGrid().getN();
+        int m = initialState.getGrid().getM();
+        int cnt = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (initialState.getGrid().getHostAtPos(i, j) == Host.HOSTAGE)
+                    cnt++;
+            }
+        }
+
+        return cnt - goal.getPathCost().getDrops();
+    }
+
+    public static int getKills(Node node) {
+        return node.getPathCost().getKills();
+    }
 }
+

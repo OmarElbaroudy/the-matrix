@@ -38,7 +38,7 @@ public class Grid {
         grid[x][y] = new Cell(Host.EMPTY);
     }
 
-    public void heal(int x, int y) {
-        grid[x][y].heal();
+    public void heal(int x, int y, int damage) {
+        grid[x][y].heal(damage);
     }
 }

@@ -35,7 +35,10 @@ public class Matrix extends Problem {
             }
         }
 
-        return true;
+        int x = state.getX(), y = state.getY();
+        return state.getGrid().getHostAtPos(x,y) == Host.TELEPHONE;
+
+        //return true;
     }
 
     private void initOperators() {

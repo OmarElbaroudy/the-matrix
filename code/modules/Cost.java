@@ -22,13 +22,21 @@ public class Cost implements Comparable<Cost> {
         return this;
     }
 
-    public Cost kill() {
-        kills++;
+    public Cost kill(int x) {
+        kills += x;
         return this;
     }
 
     public int getDepth() {
         return depth;
+    }
+
+    public int getDrops() {
+        return this.drops;
+    }
+
+    public int getKills() {
+        return this.kills;
     }
 
     @Override

@@ -51,8 +51,9 @@ public abstract class Operator {
         }
 
         List<Integer> newCarriedDamages =
-                cur.getCarriedDamages().stream().map(x -> x + 2).
-                        filter(x -> x < 100).collect(Collectors.toList());
+                cur.getCarriedDamages().stream().
+                        map(x -> Math.min(100, x + 2)).
+                        collect(Collectors.toList());
 
         return new StateBuilder().
                 Grid(new Grid(newGrid)).
@@ -62,6 +63,17 @@ public abstract class Operator {
                 xPos(cur.getX()).
                 yPos(cur.getY()).
                 build();
+    }
+
+    protected List<Node> filterInvalidNodes(List<Node> nodes) {
+        return nodes.stream().filter(
+                node -> {
+                    int x = node.getState().getX();
+                    int y = node.getState().getY();
+                    Host host = node.getState().getGrid().getHostAtPos(x, y);
+                    return host != Host.MUTATED_AGENT && host != Host.AGENT;
+                }
+        ).collect(Collectors.toList());
     }
 
     @Override

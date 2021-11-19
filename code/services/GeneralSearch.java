@@ -12,7 +12,6 @@ import java.util.function.BiFunction;
 
 public class GeneralSearch {
 
-    private static int kills, deaths, pathDepth;
     private static StringBuilder sol;
 
     public static String search(Problem problem,
@@ -34,7 +33,7 @@ public class GeneralSearch {
                     printVisual(node);
                 }
 
-                return getSolution(node, expandedNodes);
+                return getSolution(node, expandedNodes, initialState);
             }
 
             queue.add(qingFunc.apply(node, operators));
@@ -43,26 +42,28 @@ public class GeneralSearch {
         return "failed to reach test goal!";
     }
 
-    private static String getSolution(Node node, int expandedNodes) {
-        kills = pathDepth = deaths = 0;
+    private static String getSolution(Node node,
+                                      int expandedNodes,
+                                      State initialState) {
         sol = new StringBuilder();
-
         getPlan(node);
-        sol.append(deaths).append(", ").append(kills)
-                .append(", ").append(expandedNodes).append(", ").append(pathDepth);
+
+        int deaths = VisualsHandler.getDeaths(node, initialState);
+        int kills = VisualsHandler.getKills(node);
+
+        sol.replace(sol.length() - 2, sol.length(), ";");
+        sol.append(deaths).append("; ").append(kills)
+                .append("; ").append(expandedNodes);
+//                .append(", ").append(pathDepth);
 
         return sol.toString();
     }
 
     private static void getPlan(Node node) {
         if (node.getParent() != null) {
-            pathDepth++;
             getPlan(node.getParent());
-
             Operation op = node.getOperator().getOperation();
-            kills += (op == Operation.KILL) ? 1 : 0;
 
-            deaths += VisualsHandler.getDeaths(node);
             sol.append(op).append(", ");
         }
     }

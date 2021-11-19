@@ -2,6 +2,7 @@ package modules;
 
 import services.VisualsHandler;
 
+import java.util.Collections;
 import java.util.List;
 
 public class State implements Comparable<State> {
@@ -33,11 +34,14 @@ public class State implements Comparable<State> {
     public void carry(int x, int y) {
         this.remCarry -= 1;
         this.carriedDamages.add(getGrid().getDamageAtPos(x, y));
+        Collections.sort(this.carriedDamages);
         grid.clearPos(x, y);
     }
 
     public int drop() {
-        int cnt = this.carriedDamages.size();
+        int cnt = (int) this.carriedDamages.
+                stream().filter(x -> x < 100).count();
+
         this.carriedDamages.clear();
         remCarry += cnt;
         return cnt;
@@ -124,6 +128,7 @@ public class State implements Comparable<State> {
             if (x == y) continue;
             return Integer.compare(x, y);
         }
+
         return 0;
     }
 }

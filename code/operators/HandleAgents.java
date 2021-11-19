@@ -20,29 +20,33 @@ public class HandleAgents extends Operator {
         int[] dx = new int[]{0, 0, -1, 1};
         int[] dy = new int[]{-1, 1, 0, 0};
 
-        List<Node> ret = new ArrayList<>();
+        State nxtState = getNextState(node.getState());
+
+        int killed = 0;
         for (int i = 0; i < 4; i++) {
-            ret.addAll(kill(node, getNextState(node.getState()), dx[i], dy[i]));
+            killed += kill(nxtState, node.getState(), dx[i], dy[i]) ? 1 : 0;
         }
-        return ret;
+
+        if (killed == 0 || !nxtState.kill()) {
+            return new ArrayList<>();
+        }
+
+        Cost cost = new Cost().kill(killed);
+        Operator operator = new HandleAgents(Operation.KILL, cost);
+        Node nxtNode = new Node(nxtState, node, operator);
+        return super.filterInvalidNodes(Collections.singletonList(nxtNode));
     }
 
-    public List<Node> kill(Node parent, State cur, int dx, int dy) {
-        if (!isValid(cur, dx, dy)) {
-            return new ArrayList<>();
-        }
-
-        if (!cur.kill()) {
-            return new ArrayList<>();
+    public boolean kill(State cur, State parent, int dx, int dy) {
+        if (!isValid(cur, parent, dx, dy)) {
+            return false;
         }
 
         cur.clearPos(cur.getX() + dx, cur.getY() + dy);
-        Operator operator = new HandleAgents(Operation.KILL, new Cost().kill());
-        Node node = new Node(cur, parent, operator);
-        return Collections.singletonList(node);
+        return true;
     }
 
-    private boolean isValid(State state, int dx, int dy) {
+    private boolean isValid(State state, State parent, int dx, int dy) {
         int x = state.getX() + dx;
         int y = state.getY() + dy;
         int n = state.getGrid().getN();
@@ -50,7 +54,10 @@ public class HandleAgents extends Operator {
 
         if (x >= 0 && x < n && y >= 0 && y < m) {
             Host type = state.getGrid().getHostAtPos(x, y);
-            return type == Host.AGENT || type == Host.MUTATED_AGENT;
+            Host parentType = parent.getGrid().getHostAtPos(x, y);
+            return type == Host.AGENT ||
+                    (type == Host.MUTATED_AGENT &&
+                            parentType != Host.HOSTAGE);
         }
 
         return false;

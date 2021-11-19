@@ -1,9 +1,7 @@
 package modules;
 
-import java.util.Objects;
-
 public class Cell {
-    private final Host host;
+    private Host host;
     private int damage;
     private int toX;
     private int toY;
@@ -40,8 +38,12 @@ public class Cell {
         return toY;
     }
 
-    public void heal() {
-        this.damage = Math.max(0, damage - 20);
+    public void heal(int parentDamage) {
+        if (this.host == Host.MUTATED_AGENT &&
+                (parentDamage == 98 || parentDamage == 99)) {
+            this.host = Host.HOSTAGE;
+        }
+        this.damage = Math.max(0, parentDamage - 20);
     }
 
 
