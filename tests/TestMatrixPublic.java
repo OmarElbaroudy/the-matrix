@@ -242,14 +242,14 @@ public class TestMatrixPublic {
 
     @Test(timeout = 60000) //WA
     public void testb4() throws Exception {
-        String solution = Main.solve(grid4, "DF", true);
+        String solution = Main.solve(grid4, "DF", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid4, solution));
     }
 
     @Test(timeout = 60000) //AC
     public void testb5() throws Exception {
-        String solution = Main.solve(grid5, "DF", false);
+        String solution = Main.solve(grid5, "DF", true);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid5, solution));
     }
@@ -261,8 +261,7 @@ public class TestMatrixPublic {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid6, solution));
     }
 
-    @Test(timeout = 60000) //Failed to reach test Goal
-    @Ignore
+    @Test(timeout = 60000) //AC
     public void testb7() throws Exception {
         String solution = Main.solve(grid7, "DF", false);
         assertTrue("The output actions do not lead to a goal state.", solution.equals("No Solution"));

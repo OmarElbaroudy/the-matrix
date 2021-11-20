@@ -39,7 +39,7 @@ public class GeneralSearch {
             queue.add(qingFunc.apply(node, operators));
         }
 
-        return "failed to reach test goal!";
+        return "No Solution";
     }
 
     private static String getSolution(Node node,
