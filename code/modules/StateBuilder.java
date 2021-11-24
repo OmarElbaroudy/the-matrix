@@ -3,29 +3,29 @@ package modules;
 import java.util.List;
 
 public class StateBuilder {
-    int x, y;
-    int damage;
-    int remCarry;
+    byte x, y;
+    byte damage;
+    byte remCarry;
     Grid grid;
-    List<Integer> carriedDamages;
+    List<Byte> carriedDamages;
 
     public StateBuilder xPos(int x) {
-        this.x = x;
+        this.x = (byte) x;
         return this;
     }
 
     public StateBuilder yPos(int y) {
-        this.y = y;
+        this.y = (byte) y;
         return this;
     }
 
     public StateBuilder damage(int damage) {
-        this.damage = damage;
+        this.damage = (byte) damage;
         return this;
     }
 
     public StateBuilder remCarry(int remCarry) {
-        this.remCarry = remCarry;
+        this.remCarry = (byte) remCarry;
         return this;
     }
 
@@ -34,7 +34,7 @@ public class StateBuilder {
         return this;
     }
 
-    public StateBuilder carriedDamages(List<Integer> carriedDamages) {
+    public StateBuilder carriedDamages(List<Byte> carriedDamages) {
         this.carriedDamages = carriedDamages;
         return this;
     }

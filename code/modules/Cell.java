@@ -2,9 +2,9 @@ package modules;
 
 public class Cell {
     private Host host;
-    private int damage;
-    private int toX;
-    private int toY;
+    private byte damage;
+    private byte toX;
+    private byte toY;
 
     //exception hostage, pad
     public Cell(Host host) {
@@ -13,28 +13,28 @@ public class Cell {
 
     public Cell(int damage) {
         this.host = Host.HOSTAGE;
-        this.damage = damage;
+        this.damage = (byte) damage;
     }
 
     public Cell(int toX, int toY) {
         this.host = Host.PAD;
-        this.toX = toX;
-        this.toY = toY;
+        this.toX = (byte) toX;
+        this.toY = (byte) toY;
     }
 
     public Host getHost() {
         return host;
     }
 
-    public int getDamage() {
+    public byte getDamage() {
         return damage;
     }
 
-    public int getToX() {
+    public byte getToX() {
         return toX;
     }
 
-    public int getToY() {
+    public byte getToY() {
         return toY;
     }
 
@@ -43,8 +43,6 @@ public class Cell {
                 (parentDamage == 98 || parentDamage == 99)) {
             this.host = Host.HOSTAGE;
         }
-        this.damage = Math.max(0, parentDamage - 20);
+        this.damage = (byte) Math.max(0, parentDamage - 20);
     }
-
-
 }

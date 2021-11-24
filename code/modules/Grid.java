@@ -1,7 +1,5 @@
 package modules;
 
-import java.util.Arrays;
-
 public class Grid {
     private final Cell[][] grid;
 
@@ -14,7 +12,7 @@ public class Grid {
         return this.grid[x][y].getHost();
     }
 
-    public int getDamageAtPos(int x, int y) {
+    public byte getDamageAtPos(int x, int y) {
         return this.grid[x][y].getDamage();
     }
 

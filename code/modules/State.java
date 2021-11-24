@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class State implements Comparable<State> {
-    private final List<Integer> carriedDamages;
+    private final List<Byte> carriedDamages;
     private final Grid grid;
-    private int damage;
-    private int remCarry;
-    private int x, y;
+    private byte damage;
+    private byte remCarry;
+    private byte x, y;
 
     public State(StateBuilder builder) {
         this.x = builder.x;
@@ -27,8 +27,8 @@ public class State implements Comparable<State> {
     }
 
     public void transform(int x, int y) {
-        this.x = getGrid().getPadXAtPos(x, y);
-        this.y = getGrid().getPadYAtPos(x, y);
+        this.x = (byte) getGrid().getPadXAtPos(x, y);
+        this.y = (byte) getGrid().getPadYAtPos(x, y);
     }
 
     public void carry(int x, int y) {
@@ -52,14 +52,14 @@ public class State implements Comparable<State> {
     }
 
     public void healNeo() {
-        this.damage = Math.max(0, damage - 20);
+        this.damage = (byte) Math.max(0, damage - 20);
     }
 
     public void healCarriedHostages() {
         for (int i = 0; i < this.carriedDamages.size(); i++) {
             int x = carriedDamages.get(i);
             if (x == 100) continue;
-            carriedDamages.set(i, Math.max(0, x - 22));
+            carriedDamages.set(i, (byte) Math.max(0, x - 22));
         }
     }
 
@@ -88,7 +88,7 @@ public class State implements Comparable<State> {
         return grid;
     }
 
-    public List<Integer> getCarriedDamages() {
+    public List<Byte> getCarriedDamages() {
         return carriedDamages;
     }
 
@@ -100,7 +100,6 @@ public class State implements Comparable<State> {
 
     @Override
     public int compareTo(State o) {
-
         if (this.x != o.x) return Integer.compare(this.x, o.x);
         if (this.y != o.y) return Integer.compare(this.y, o.y);
         if (this.damage != o.damage) return Integer.compare(this.damage, o.damage);

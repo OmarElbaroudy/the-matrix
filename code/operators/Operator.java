@@ -50,9 +50,9 @@ public abstract class Operator {
             }
         }
 
-        List<Integer> newCarriedDamages =
+        List<Byte> newCarriedDamages =
                 cur.getCarriedDamages().stream().
-                        map(x -> Math.min(100, x + 2)).
+                        map(x -> (byte) Math.min(100, x + 2)).
                         collect(Collectors.toList());
 
         return new StateBuilder().
