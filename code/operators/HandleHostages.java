@@ -41,7 +41,8 @@ public class HandleHostages extends Operator {
             return new ArrayList<>();
         }
 
-        Cost c = new Cost().drop(cur.drop());
+        int drops = cur.drop(parent.getState().getCarriedDamages());
+        Cost c = new Cost().drop(drops);
         Operator operator = new HandleHostages(Operation.DROP, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);

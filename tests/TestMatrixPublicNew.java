@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import facade.Main;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -300,7 +301,7 @@ public class TestMatrixPublicNew {
 
     @Test(timeout = 10000)
     public void teste1() throws Exception {
-        String solution = Main.solve(grid1, "GR1", false);
+        String solution = Main.solve(grid1, "GR1", true);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid1, solution));
     }
@@ -361,6 +362,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testf0() throws Exception {
         String solution = Main.solve(grid0, "GR2", false);
         solution = solution.replace(" ", "");
@@ -368,6 +370,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testf1() throws Exception {
         String solution = Main.solve(grid1, "GR2", false);
         solution = solution.replace(" ", "");
@@ -375,6 +378,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testf2() throws Exception {
         String solution = Main.solve(grid2, "GR2", false);
         solution = solution.replace(" ", "");
@@ -382,6 +386,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testf3() throws Exception {
         String solution = Main.solve(grid3, "GR2", false);
         solution = solution.replace(" ", "");
@@ -389,12 +394,14 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testf4() throws Exception {
         String solution = Main.solve(grid4, "GR2", false);
         assertTrue("The output actions do not lead to a goal state.", solution.equals("No Solution"));
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testf5() throws Exception {
         String solution = Main.solve(grid5, "GR2", false);
         solution = solution.replace(" ", "");
@@ -402,6 +409,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 30000)
+    @Ignore
     public void testf6() throws Exception {
         String solution = Main.solve(grid6, "GR2", false);
         solution = solution.replace(" ", "");
@@ -409,6 +417,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testf7() throws Exception {
         String solution = Main.solve(grid7, "GR2", false);
         solution = solution.replace(" ", "");
@@ -416,6 +425,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testf8() throws Exception {
         String solution = Main.solve(grid8, "GR2", false);
         solution = solution.replace(" ", "");
@@ -423,6 +433,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testf9() throws Exception {
         String solution = Main.solve(grid9, "GR2", false);
         solution = solution.replace(" ", "");
@@ -507,6 +518,7 @@ public class TestMatrixPublicNew {
 
 
     @Test(timeout = 10000)
+    @Ignore
     public void testh0() throws Exception {
         String solution = Main.solve(grid0, "AS2", false);
         solution = solution.replace(" ", "");
@@ -514,6 +526,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testh1() throws Exception {
         String solution = Main.solve(grid1, "AS2", false);
         solution = solution.replace(" ", "");
@@ -521,6 +534,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testh2() throws Exception {
         String solution = Main.solve(grid2, "AS2", false);
         solution = solution.replace(" ", "");
@@ -528,6 +542,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testh3() throws Exception {
         String solution = Main.solve(grid3, "AS2", false);
         solution = solution.replace(" ", "");
@@ -535,12 +550,14 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testh4() throws Exception {
         String solution = Main.solve(grid4, "AS2", false);
         assertTrue("The output actions do not lead to a goal state.", solution.equals("No Solution"));
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testh5() throws Exception {
         String solution = Main.solve(grid5, "AS2", false);
         solution = solution.replace(" ", "");
@@ -548,6 +565,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 30000)
+    @Ignore
     public void testh6() throws Exception {
         String solution = Main.solve(grid6, "AS2", false);
         solution = solution.replace(" ", "");
@@ -555,6 +573,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testh7() throws Exception {
         String solution = Main.solve(grid7, "AS2", false);
         solution = solution.replace(" ", "");
@@ -562,6 +581,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testh8() throws Exception {
         String solution = Main.solve(grid8, "AS2", false);
         solution = solution.replace(" ", "");
@@ -569,6 +589,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testh9() throws Exception {
         String solution = Main.solve(grid9, "AS2", false);
         solution = solution.replace(" ", "");
@@ -576,6 +597,7 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
+    @Ignore
     public void testhz10() throws Exception {
         String solution = Main.solve(grid10, "AS2", false);
         solution = solution.replace(" ", "");
@@ -815,6 +837,10 @@ public class TestMatrixPublicNew {
         String plan = solutionArray[0];
         int blue = Integer.parseInt(solutionArray[1]);
         int doors = Integer.parseInt(solutionArray[2]);
+
+        System.out.println(plan);
+        System.out.println(blue);
+        System.out.println(doors);
 
         plan.replace(" ", "");
         plan.replace("\n", "");

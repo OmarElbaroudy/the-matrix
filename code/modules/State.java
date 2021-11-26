@@ -38,13 +38,12 @@ public class State implements Comparable<State> {
         grid.clearPos(x, y);
     }
 
-    public int drop() {
-        int cnt = (int) this.carriedDamages.
-                stream().filter(x -> x < 100).count();
-
+    public int drop(List<Byte> prevCarriedDamages) {
+        remCarry += this.carriedDamages.size();
         this.carriedDamages.clear();
-        remCarry += cnt;
-        return cnt;
+
+        return (int) prevCarriedDamages.
+                stream().filter(x -> x < 100).count();
     }
 
     public void clearPos(int x, int y) {

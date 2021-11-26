@@ -19,6 +19,12 @@ public class Cost implements Comparable<Cost> {
         this.drops = (byte) (pathCost.drops + cost.drops);
     }
 
+    public Cost(int depth, int kills, int drops) {
+        this.depth = (short) (depth);
+        this.kills = (short) (kills);
+        this.drops = (byte) (drops);
+    }
+
     public Cost drop(int x) {
         drops += x;
         return this;

@@ -24,6 +24,10 @@ public class Grid {
         return this.grid[x][y].getToY();
     }
 
+    public Cell getCellAtPos(int x, int y) {
+        return this.grid[x][y];
+    }
+
     public int getN() {
         return grid.length;
     }
@@ -31,6 +35,7 @@ public class Grid {
     public int getM() {
         return grid[0].length;
     }
+
 
     public void clearPos(int x, int y) {
         grid[x][y] = new Cell(Host.EMPTY);
