@@ -7,9 +7,10 @@ public class Cost implements Comparable<Cost> {
     private final short depth;
     private short kills;
     private byte drops;
+    private byte deaths;
 
     public Cost() {
-        kills = drops = 0;
+        kills = drops = deaths = 0;
         depth = 1;
     }
 
@@ -17,6 +18,8 @@ public class Cost implements Comparable<Cost> {
         this.depth = (short) (pathCost.depth + cost.depth);
         this.kills = (short) (pathCost.kills + cost.kills);
         this.drops = (byte) (pathCost.drops + cost.drops);
+        this.deaths = (byte) (pathCost.deaths + cost.deaths);
+
     }
 
     public Cost drop(int x) {
@@ -59,21 +62,24 @@ public class Cost implements Comparable<Cost> {
     }
 
     public int getDeaths(State state) {
-        return InfoExtractor.numberOfHostages -
-                (this.drops + getAliveHostages(state));
+    	
+       deaths = (byte)( InfoExtractor.numberOfHostages -
+                (this.drops + getAliveHostages(state)));
+       return deaths;
+       
     }
 
     @Override
     public int compareTo(Cost o) {
-        if (this.drops == o.drops
+        if (this.deaths == o.deaths
                 && this.kills == o.kills) {
             return this.depth - o.depth;
         }
 
-        if (drops == o.drops) {
+        if (deaths == o.deaths) {
             return this.kills - o.kills;
         }
 
-        return o.drops - this.drops;
+        return o.deaths - this.deaths;
     }
 }

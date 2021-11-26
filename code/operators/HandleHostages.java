@@ -42,6 +42,8 @@ public class HandleHostages extends Operator {
         }
 
         Cost c = new Cost().drop(cur.drop());
+        c.getDeaths(cur);
+
         Operator operator = new HandleHostages(Operation.DROP, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
