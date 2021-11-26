@@ -1,29 +1,20 @@
 package queues;
 
-import modules.Node;
+import evaluators.AStarEvaluator;
+import evaluators.Evaluator;
+import evaluators.NodeComparator;
+import heuristics.FirstFunction;
+import heuristics.HeuristicFunction;
+import heuristics.SecondFunction;
 
-import java.util.List;
 import java.util.PriorityQueue;
 
-public class AStar extends Queue {
-    protected PriorityQueue<Node> pq;
+public class AStar extends UniformCost {
 
     public AStar(int i) {
-        pq = new PriorityQueue<>();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void add(List<Node> nodes) {
-
-    }
-
-    @Override
-    public Node removeFront() {
-        return null;
+        HeuristicFunction function =
+                (i == 1) ? new FirstFunction() : new SecondFunction();
+        Evaluator evaluator = new AStarEvaluator(function);
+        super.setQueue(new PriorityQueue<>(new NodeComparator(evaluator)));
     }
 }

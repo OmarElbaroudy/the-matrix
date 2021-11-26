@@ -1,6 +1,7 @@
 package evaluators;
 
 import heuristics.HeuristicFunction;
+import modules.Cost;
 import modules.Node;
 
 public abstract class Evaluator {
@@ -10,5 +11,5 @@ public abstract class Evaluator {
         this.function = function;
     }
 
-    public abstract int apply(Node node);
+    public abstract Cost apply(Node node);
 }

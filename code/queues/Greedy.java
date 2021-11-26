@@ -1,27 +1,23 @@
 package queues;
 
+import evaluators.Evaluator;
+import evaluators.GreedyEvaluator;
+import evaluators.NodeComparator;
+import heuristics.FirstFunction;
+import heuristics.HeuristicFunction;
+import heuristics.SecondFunction;
 import modules.Node;
 
-import java.util.List;
+import java.util.PriorityQueue;
 
-public class Greedy extends Queue{
+public class Greedy extends UniformCost {
+    PriorityQueue<Node> pq;
 
-    public Greedy(int i){
-
+    public Greedy(int i) {
+        HeuristicFunction function =
+                (i == 1) ? new FirstFunction() : new SecondFunction();
+        Evaluator evaluator = new GreedyEvaluator(function);
+        super.setQueue(pq = new PriorityQueue<>(new NodeComparator(evaluator)));
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void add(List<Node> nodes) {
-
-    }
-
-    @Override
-    public Node removeFront() {
-        return null;
-    }
 }

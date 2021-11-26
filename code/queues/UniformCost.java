@@ -35,4 +35,9 @@ public class UniformCost extends Queue {
     public Node removeFront() {
         return pq.poll();
     }
+
+    protected void setQueue(PriorityQueue<Node> pq) {
+        this.pq = pq;
+    }
+
 }
