@@ -3,11 +3,13 @@ package queues;
 import modules.Node;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
-public class AStar extends Queue{
+public class AStar extends Queue {
+    protected PriorityQueue<Node> pq;
 
-    public AStar(int i){
-
+    public AStar(int i) {
+        pq = new PriorityQueue<>();
     }
 
     @Override

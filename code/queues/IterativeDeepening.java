@@ -20,7 +20,7 @@ public class IterativeDeepening extends Queue {
             return true;
         }
 
-        curDepth += 3;
+        curDepth += 1;
         makeQ(root);
         return false;
     }

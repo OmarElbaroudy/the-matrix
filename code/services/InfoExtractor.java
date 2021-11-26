@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public class InfoExtractor {
 
-    static String[] arrOfStr;
+    private static String[] arrOfStr;
+    public static int numberOfHostages;
 
     public InfoExtractor(String Grid) {
         arrOfStr = Grid.split(";");
@@ -138,10 +139,10 @@ public class InfoExtractor {
     }
 
     private int[] getHostages() {
-
-        return Arrays.stream(arrOfStr[7].split(",")).
+        int[] arr = Arrays.stream(arrOfStr[7].split(",")).
                 mapToInt(Integer::parseInt).toArray();
-
+        numberOfHostages = arr.length;
+        return arr;
     }
 
     public int[] getHostagesX() {

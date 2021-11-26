@@ -1,5 +1,7 @@
 package modules;
 
+import services.InfoExtractor;
+
 public class Cost implements Comparable<Cost> {
     //private int pills;
     private final short depth;
@@ -37,6 +39,28 @@ public class Cost implements Comparable<Cost> {
 
     public int getKills() {
         return this.kills;
+    }
+
+    public int getAliveHostages(State state) {
+        return (int) state.getCarriedDamages().
+                stream().filter(x -> x < 100).count() +
+                getAliveHostagesInGrid(state.getGrid());
+    }
+
+    private int getAliveHostagesInGrid(Grid grid) {
+        int ret = 0;
+        for (int i = 0; i < grid.getN(); i++) {
+            for (int j = 0; j < grid.getM(); j++) {
+                Host type = grid.getHostAtPos(i, j);
+                ret += type == Host.HOSTAGE ? 1 : 0;
+            }
+        }
+        return ret;
+    }
+
+    public int getDeaths(State state) {
+        return InfoExtractor.numberOfHostages -
+                (this.drops + getAliveHostages(state));
     }
 
     @Override
