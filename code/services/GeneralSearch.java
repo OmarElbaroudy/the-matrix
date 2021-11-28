@@ -72,6 +72,7 @@ public class GeneralSearch {
         if (node.getParent() != null) {
             printVisual(node.getParent());
             System.out.println(node.getOperator().getOperation());
+            System.out.println(node.getPathCost());
         }
 
         System.out.println(node.getState());

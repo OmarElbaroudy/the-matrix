@@ -37,7 +37,9 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(0, -1);
-        Operator operator = new HandleNeo(Operation.UP, new Cost());
+        Cost c = new Cost();
+//        c.getDeaths(cur);
+        Operator operator = new HandleNeo(Operation.UP, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -53,7 +55,9 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(0, 1);
-        Operator operator = new HandleNeo(Operation.DOWN, new Cost());
+        Cost c = new Cost();
+//        c.getDeaths(cur);
+        Operator operator = new HandleNeo(Operation.DOWN, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -69,7 +73,10 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(1, 0);
-        Operator operator = new HandleNeo(Operation.RIGHT, new Cost());
+        Cost c = new Cost();
+//        c.getDeaths(cur);
+        
+        Operator operator = new HandleNeo(Operation.RIGHT, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -86,7 +93,10 @@ public class HandleNeo extends Operator {
         }
 
         cur.move(-1, 0);
-        Operator operator = new HandleNeo(Operation.LEFT, new Cost());
+        Cost c = new Cost();
+//        c.getDeaths(cur);
+        
+        Operator operator = new HandleNeo(Operation.LEFT, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -104,7 +114,10 @@ public class HandleNeo extends Operator {
         }
 
         cur.transform(cur.getX(), cur.getY());
-        Operator operator = new HandleNeo(Operation.FLY, new Cost());
+        Cost c = new Cost();
+//        c.getDeaths(cur);
+        
+        Operator operator = new HandleNeo(Operation.FLY, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -130,7 +143,9 @@ public class HandleNeo extends Operator {
         cur.healCarriedHostages();
 
         cur.clearPos(cur.getX(), cur.getY());
-        Operator operator = new HandleNeo(Operation.TAKE_PILL, new Cost());
+        Cost c = new Cost();
+        
+        Operator operator = new HandleNeo(Operation.TAKE_PILL, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }

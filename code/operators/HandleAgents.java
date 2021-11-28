@@ -32,6 +32,7 @@ public class HandleAgents extends Operator {
         }
 
         Cost cost = new Cost().kill(killed);
+//        cost.getDeaths(nxtState);
         Operator operator = new HandleAgents(Operation.KILL, cost);
         Node nxtNode = new Node(nxtState, node, operator);
         return super.filterInvalidNodes(Collections.singletonList(nxtNode));

@@ -1,6 +1,8 @@
 package modules;
 
+import facade.Matrix;
 import services.InfoExtractor;
+import services.VisualsHandler;
 
 public class Cost implements Comparable<Cost> {
     //private int pills;
@@ -18,7 +20,8 @@ public class Cost implements Comparable<Cost> {
         this.depth = (short) (pathCost.depth + cost.depth);
         this.kills = (short) (pathCost.kills + cost.kills);
         this.drops = (byte) (pathCost.drops + cost.drops);
-        this.deaths = (byte) (pathCost.deaths + cost.deaths);
+//        this.deaths = (byte) ((pathCost.deaths + cost.deaths));
+//        this.deaths=(pathCost.deaths);
 
     }
 
@@ -63,8 +66,11 @@ public class Cost implements Comparable<Cost> {
 
     public int getDeaths(State state) {
     	
+//    	deaths= VisualsHandler.getDeaths(state,);
+    	
        deaths = (byte)( InfoExtractor.numberOfHostages -
-                (this.drops + getAliveHostages(state)));
+                ((this.drops) + getAliveHostages(state)));
+//       System.out.println("deaths: "+this.deaths);
        return deaths;
        
     }
@@ -80,6 +86,9 @@ public class Cost implements Comparable<Cost> {
             return this.kills - o.kills;
         }
 
-        return o.deaths - this.deaths;
+        return this.deaths-o.deaths ;
+    }
+    public String toString() {
+    	return "death:"+ this.deaths+" kills: "+this.kills+" depth: "+this.depth+ " drops: "+drops;
     }
 }

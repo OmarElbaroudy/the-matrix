@@ -141,7 +141,8 @@ public class InfoExtractor {
     private int[] getHostages() {
         int[] arr = Arrays.stream(arrOfStr[7].split(",")).
                 mapToInt(Integer::parseInt).toArray();
-        numberOfHostages = arr.length;
+        numberOfHostages = (int) Math.ceil(arr.length/3);
+        System.out.println(numberOfHostages);
         return arr;
     }
 

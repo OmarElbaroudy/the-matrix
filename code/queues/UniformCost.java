@@ -33,6 +33,7 @@ public class UniformCost extends Queue {
 
     @Override
     public Node removeFront() {
+//    	System.out.println(pq.peek().getPathCost());
         return pq.poll();
     }
 

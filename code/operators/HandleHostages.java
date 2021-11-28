@@ -31,7 +31,9 @@ public class HandleHostages extends Operator {
         }
 
         cur.carry(cur.getX(), cur.getY());
-        Operator operator = new HandleHostages(Operation.CARRY, new Cost());
+        Cost c = new Cost();
+//        c.getDeaths(cur);
+        Operator operator = new HandleHostages(Operation.CARRY, c);
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);
     }
@@ -42,10 +44,11 @@ public class HandleHostages extends Operator {
         }
 
         Cost c = new Cost().drop(cur.drop());
-        c.getDeaths(cur);
+//        c.getDeaths(cur);
 
         Operator operator = new HandleHostages(Operation.DROP, c);
         Node node = new Node(cur, parent, operator);
+        
         return Collections.singletonList(node);
     }
 
