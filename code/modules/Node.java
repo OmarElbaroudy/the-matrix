@@ -15,7 +15,7 @@ public class Node implements Comparable<Node> {
         this.operator = operator;
 
         this.pathCost = parent != null
-                ? new Cost(parent.pathCost, operator.getCost())
+                ? new Cost(parent.pathCost, operator.getCost(), state)
                 : new Cost();
 
     }

@@ -136,7 +136,30 @@ public class GraphHandler {
         return false;
     }
 
-    public void print(){
+    public int getNumOfPotentialDrops() {
+        int cnt = 0;
+        int[] fst = getShortestDist(neoIdx);
+        int[] snd = getShortestDist(TBIdx);
+
+        for (int i = 0; i < N * M; i++) {
+            if (cells.get(i).getHost() == Host.HOSTAGE) {
+                int damage = cells.get(i).getDamage();
+                damage += 2 * (fst[i] + snd[i]) + 1;
+                cnt += damage <= 100 ? 1 : 0;
+            }
+        }
+        return cnt;
+    }
+
+    public int getDepth() {
+        int cnt = (int) cells.stream().
+                filter(cell -> cell.getHost() == Host.HOSTAGE).count();
+
+        if (cnt != 0) return cnt;
+        return getShortestDist(neoIdx)[TBIdx];
+    }
+
+    public void print() {
         System.out.println(getHostageKills());
         System.out.println(canReachTB());
     }

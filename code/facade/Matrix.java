@@ -37,8 +37,6 @@ public class Matrix extends Problem {
 
         int x = state.getX(), y = state.getY();
         return state.getGrid().getHostAtPos(x,y) == Host.TELEPHONE;
-
-        //return true;
     }
 
     private void initOperators() {

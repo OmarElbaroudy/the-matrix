@@ -1,13 +1,13 @@
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import facade.Main;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static org.junit.Assert.assertTrue;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
@@ -25,6 +25,105 @@ public class TestMatrixPublicNew {
     String grid9 = "5,5;2;0,4;1,4;0,1,1,1,2,1,3,1,3,3,3,4;1,0,2,4;0,3,4,3,4,3,0,3;0,0,30,3,0,80,4,4,80";
     String grid10 = "5,5;4;1,1;4,1;2,4,0,4,3,2,3,0,4,2,0,1,1,3,2,1;4,0,4,4,1,0;2,0,0,2,0,2,2,0;0,0,62,4,3,45,3,3,39,2,3,40";
 
+    public static boolean applyPlan(String grid, String solution) {
+        String[] solutionArray = solution.split(";");
+        String plan = solutionArray[0];
+        int blue = Integer.parseInt(solutionArray[1]);
+        int doors = Integer.parseInt(solutionArray[2]);
+
+        plan.replace(" ", "");
+        plan.replace("\n", "");
+        plan.replace("\r", "");
+        plan.replace("\n\r", "");
+        plan.replace("\t", "");
+
+        String[] actions = plan.split(",");
+
+        String[] gridArray = grid.split(";");
+        String[] dimensions = gridArray[0].split(",");
+        int m = Integer.parseInt(dimensions[0]);
+        int n = Integer.parseInt(dimensions[1]);
+
+        int capacity = Integer.parseInt(gridArray[1]);
+
+        String[] neo = gridArray[2].split(",");
+        int x00 = Integer.parseInt(neo[0]);
+        int x01 = Integer.parseInt(neo[1]);
+
+        String[] booth = gridArray[3].split(",");
+        int x10 = Integer.parseInt(booth[0]);
+        int x11 = Integer.parseInt(booth[1]);
+
+        String[] ag = gridArray[4].split(",");
+        ArrayList<String> xyz = new ArrayList<String>();
+        for (int i = 0; i < ag.length - 1; i += 2) {
+            xyz.add(ag[i] + "," + ag[i + 1]);
+        }
+
+        String[] pl = gridArray[5].split(",");
+        ArrayList<String> m4 = new ArrayList<String>();
+        for (int i = 0; i < pl.length - 1; i += 2) {
+            m4.add(pl[i] + "," + pl[i + 1]);
+        }
+
+        String[] pas = gridArray[6].split(",");
+        HashMap<String, String> m5 = new HashMap<String, String>();
+        for (int i = 0; i < pas.length - 3; i += 4) {
+            m5.put(pas[i] + "," + pas[i + 1], pas[i + 2] + "," + pas[i + 3]);
+        }
+
+        String[] hstg = gridArray[7].split(",");
+        HashMap<String, Integer> m7 = new HashMap<String, Integer>();
+        for (int i = 0; i < hstg.length - 2; i += 3) {
+            m7.put(hstg[i] + "," + hstg[i + 1], Integer.parseInt(hstg[i + 2]));
+        }
+
+        TH s = new TH(m, n, x10, x11, x00, x01, capacity, xyz, m4, m5, m7);
+        boolean linkin = true;
+
+        for (int i = 0; i < actions.length; i++) {
+
+            switch (actions[i]) {
+                case "up":
+                    linkin = s.f2();
+                    break;
+                case "down":
+                    linkin = s.f3();
+                    break;
+                case "right":
+                    linkin = s.f4();
+                    break;
+                case "left":
+                    linkin = s.applyLeft();
+                    break;
+                case "carry":
+                    linkin = s.f209();
+                    break;
+                case "drop":
+                    linkin = s.f220();
+                    break;
+                case "fly":
+                    linkin = s.f320();
+                    break;
+                case "takePill":
+                    linkin = s.f32();
+                    break;
+                case "kill":
+                    linkin = s.f100();
+                    break;
+                default:
+                    linkin = false;
+                    break;
+
+            }
+
+            if (!linkin)
+                return false;
+
+
+        }
+        return s.grace() && s.m23 == doors && s.m10.size() == blue;
+    }
 
     @Test(timeout = 10000)
     public void testa0() throws Exception {
@@ -154,14 +253,14 @@ public class TestMatrixPublicNew {
     public void testb7() throws Exception {
         String solution = Main.solve(grid7, "DF", false);
         solution = solution.replace(" ", "");
-        assertTrue("The output actions do not lead to a goal state.",applyPlan(grid7, solution) );
+        assertTrue("The output actions do not lead to a goal state.", applyPlan(grid7, solution));
     }
 
     @Test(timeout = 30000)
     public void testb8() throws Exception {
         String solution = Main.solve(grid8, "DF", false);
         solution = solution.replace(" ", "");
-        assertTrue("The output actions do not lead to a goal state.",applyPlan(grid8, solution));
+        assertTrue("The output actions do not lead to a goal state.", applyPlan(grid8, solution));
     }
 
     @Test(timeout = 30000)
@@ -206,7 +305,6 @@ public class TestMatrixPublicNew {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid3, solution));
     }
 
-
     @Test(timeout = 10000)
     public void testc4() throws Exception {
         String solution = Main.solve(grid4, "UC", false);
@@ -231,7 +329,7 @@ public class TestMatrixPublicNew {
     public void testc7() throws Exception {
         String solution = Main.solve(grid7, "UC", false);
         solution = solution.replace(" ", "");
-        assertTrue("The output actions do not lead to a goal state.",  applyPlan(grid7, solution));
+        assertTrue("The output actions do not lead to a goal state.", applyPlan(grid7, solution));
     }
 
     @Test(timeout = 400000)
@@ -247,7 +345,6 @@ public class TestMatrixPublicNew {
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid9, solution));
     }
-
 
     @Test(timeout = 10000)
     public void testd0() throws Exception {
@@ -291,7 +388,6 @@ public class TestMatrixPublicNew {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid6, solution));
     }
 
-
     @Test(timeout = 10000)
     public void teste0() throws Exception {
         String solution = Main.solve(grid0, "GR1", false);
@@ -301,7 +397,7 @@ public class TestMatrixPublicNew {
 
     @Test(timeout = 10000)
     public void teste1() throws Exception {
-        String solution = Main.solve(grid1, "GR1", true);
+        String solution = Main.solve(grid1, "GR1", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid1, solution));
     }
@@ -362,7 +458,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testf0() throws Exception {
         String solution = Main.solve(grid0, "GR2", false);
         solution = solution.replace(" ", "");
@@ -370,7 +465,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testf1() throws Exception {
         String solution = Main.solve(grid1, "GR2", false);
         solution = solution.replace(" ", "");
@@ -378,7 +472,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testf2() throws Exception {
         String solution = Main.solve(grid2, "GR2", false);
         solution = solution.replace(" ", "");
@@ -386,7 +479,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testf3() throws Exception {
         String solution = Main.solve(grid3, "GR2", false);
         solution = solution.replace(" ", "");
@@ -394,14 +486,12 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testf4() throws Exception {
         String solution = Main.solve(grid4, "GR2", false);
         assertTrue("The output actions do not lead to a goal state.", solution.equals("No Solution"));
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testf5() throws Exception {
         String solution = Main.solve(grid5, "GR2", false);
         solution = solution.replace(" ", "");
@@ -409,7 +499,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 30000)
-    @Ignore
     public void testf6() throws Exception {
         String solution = Main.solve(grid6, "GR2", false);
         solution = solution.replace(" ", "");
@@ -417,7 +506,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testf7() throws Exception {
         String solution = Main.solve(grid7, "GR2", false);
         solution = solution.replace(" ", "");
@@ -425,7 +513,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testf8() throws Exception {
         String solution = Main.solve(grid8, "GR2", false);
         solution = solution.replace(" ", "");
@@ -433,7 +520,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testf9() throws Exception {
         String solution = Main.solve(grid9, "GR2", false);
         solution = solution.replace(" ", "");
@@ -516,9 +602,7 @@ public class TestMatrixPublicNew {
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid10, solution));
     }
 
-
     @Test(timeout = 10000)
-    @Ignore
     public void testh0() throws Exception {
         String solution = Main.solve(grid0, "AS2", false);
         solution = solution.replace(" ", "");
@@ -526,7 +610,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testh1() throws Exception {
         String solution = Main.solve(grid1, "AS2", false);
         solution = solution.replace(" ", "");
@@ -534,7 +617,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testh2() throws Exception {
         String solution = Main.solve(grid2, "AS2", false);
         solution = solution.replace(" ", "");
@@ -542,7 +624,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testh3() throws Exception {
         String solution = Main.solve(grid3, "AS2", false);
         solution = solution.replace(" ", "");
@@ -550,14 +631,12 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testh4() throws Exception {
         String solution = Main.solve(grid4, "AS2", false);
         assertTrue("The output actions do not lead to a goal state.", solution.equals("No Solution"));
     }
 
     @Test(timeout = 10000)
-    @Ignore
     public void testh5() throws Exception {
         String solution = Main.solve(grid5, "AS2", false);
         solution = solution.replace(" ", "");
@@ -565,7 +644,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 30000)
-    @Ignore
     public void testh6() throws Exception {
         String solution = Main.solve(grid6, "AS2", false);
         solution = solution.replace(" ", "");
@@ -573,7 +651,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testh7() throws Exception {
         String solution = Main.solve(grid7, "AS2", false);
         solution = solution.replace(" ", "");
@@ -581,7 +658,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testh8() throws Exception {
         String solution = Main.solve(grid8, "AS2", false);
         solution = solution.replace(" ", "");
@@ -589,7 +665,6 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testh9() throws Exception {
         String solution = Main.solve(grid9, "AS2", false);
         solution = solution.replace(" ", "");
@@ -597,13 +672,11 @@ public class TestMatrixPublicNew {
     }
 
     @Test(timeout = 400000)
-    @Ignore
     public void testhz10() throws Exception {
         String solution = Main.solve(grid10, "AS2", false);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid10, solution));
     }
-
 
     static class TH {
         int m;
@@ -618,15 +691,15 @@ public class TestMatrixPublicNew {
         ArrayList<String> xyz;
         ArrayList<String> xyzw;
         ArrayList<String> m4;
-        HashMap<String,String> m5;
-        HashMap<String,Integer> m7;
-        HashMap<String,Integer> m6;
+        HashMap<String, String> m5;
+        HashMap<String, Integer> m7;
+        HashMap<String, Integer> m6;
         ArrayList<String> m10;
         int m23;
         boolean ll;
 
         public TH(int m, int n, int x10, int x11, int x00, int x01, int m1,
-                  ArrayList<String> xyz,ArrayList<String> m4,
+                  ArrayList<String> xyz, ArrayList<String> m4,
                   HashMap<String, String> m5, HashMap<String, Integer> m7) {
             this.m = m;
             this.n = n;
@@ -642,52 +715,52 @@ public class TestMatrixPublicNew {
             this.m4 = m4;
             this.m5 = m5;
             this.m7 = m7;
-            this.m6 = new HashMap<String,Integer>();
+            this.m6 = new HashMap<String, Integer>();
             this.m10 = new ArrayList<String>();
             this.m23 = 0;
             this.ll = false;
         }
 
         public String f1(int x, int y) {
-            return x+","+y;
+            return x + "," + y;
         }
 
         public boolean f12(int x, int y) {
-            return x <0 || x>m || y<0 || y>n ? false: true;
+            return x < 0 || x > m || y < 0 || y > n ? false : true;
         }
 
         public ArrayList<String> f52(int x, int y) {
             ArrayList<String> result = new ArrayList<String>();
-            if(f12(x-1,y))
-                result.add((x-1)+","+y);
-            if(f12(x+1,y))
-                result.add((x+1)+","+y);
-            if(f12(x,y-1))
-                result.add(x+","+(y-1));
-            if(f12(x,y+1))
-                result.add(x+","+(y+1));
+            if (f12(x - 1, y))
+                result.add((x - 1) + "," + y);
+            if (f12(x + 1, y))
+                result.add((x + 1) + "," + y);
+            if (f12(x, y - 1))
+                result.add(x + "," + (y - 1));
+            if (f12(x, y + 1))
+                result.add(x + "," + (y + 1));
             return result;
         }
 
         public boolean f42(int x, int y) {
-            String ln = f1(x,y);
-            if(this.xyz.contains(ln) || this.xyzw.contains(ln)
-                    || (this.m7.containsKey(ln) && this.m7.get(ln)>97))
+            String ln = f1(x, y);
+            if (this.xyz.contains(ln) || this.xyzw.contains(ln)
+                    || (this.m7.containsKey(ln) && this.m7.get(ln) > 97))
                 return false;
             return true;
         }
 
         public boolean f2() {
-            if(!f42(x00-1, x01)) return false;
-            if(x00 - 1 >= 0)
+            if (!f42(x00 - 1, x01)) return false;
+            if (x00 - 1 >= 0)
                 x00--;
             ll2();
             return true;
         }
 
         public boolean f3() {
-            if(!f42(x00+1, x01)) return false;
-            if(x00 + 1 < this.m)
+            if (!f42(x00 + 1, x01)) return false;
+            if (x00 + 1 < this.m)
                 x00++;
             ll2();
             return true;
@@ -695,8 +768,8 @@ public class TestMatrixPublicNew {
         }
 
         public boolean applyLeft() {
-            if(!f42(x00, x01-1)) return false;
-            if(x01 - 1 >= 0)
+            if (!f42(x00, x01 - 1)) return false;
+            if (x01 - 1 >= 0)
                 x01--;
             ll2();
             return true;
@@ -704,28 +777,28 @@ public class TestMatrixPublicNew {
         }
 
         public boolean f4() {
-            if(!f42(x00, x01+1)) return false;
-            if(x01 + 1 < this.n)
+            if (!f42(x00, x01 + 1)) return false;
+            if (x01 + 1 < this.n)
                 x01++;
             ll2();
             return true;
         }
 
         public boolean f100() {
-            ArrayList<String> acdc = f52(x00,x01);
-            if(acdc.size()>0) {
-                for(String led:acdc) {
-                    if(xyz.contains(led)) {
+            ArrayList<String> acdc = f52(x00, x01);
+            if (acdc.size() > 0) {
+                for (String led : acdc) {
+                    if (xyz.contains(led)) {
                         xyz.remove(led);
                         this.m23++;
                     }
-                    if(xyzw.contains(led)) {
+                    if (xyzw.contains(led)) {
                         xyzw.remove(led);
                         this.m23++;
                     }
                 }
-                m3 +=20;
-                if(m3 == 100)
+                m3 += 20;
+                if (m3 == 100)
                     ll = true;
 
                 ll2();
@@ -736,9 +809,9 @@ public class TestMatrixPublicNew {
         }
 
         public boolean f209() {
-            String floyd = f1(x00,x01);
-            if(m2 <= m1) {
-                if(m7.containsKey(floyd)) {
+            String floyd = f1(x00, x01);
+            if (m2 <= m1) {
+                if (m7.containsKey(floyd)) {
                     m2++;
                     m6.put(floyd, m7.get(floyd));
                     m7.remove(floyd);
@@ -751,7 +824,7 @@ public class TestMatrixPublicNew {
         }
 
         public boolean f220() {
-            if(x00 == x10 && x01 == x11 && m2 >0) {
+            if (x00 == x10 && x01 == x11 && m2 > 0) {
                 m2 = 0;
                 m6.clear();
                 ll2();
@@ -761,10 +834,10 @@ public class TestMatrixPublicNew {
         }
 
         public boolean f320() {
-            String floyd = f1(x00,x01);
-            if(this.m5.containsKey(floyd)) {
+            String floyd = f1(x00, x01);
+            if (this.m5.containsKey(floyd)) {
                 String tofloyd = this.m5.get(floyd);
-                String [] s = tofloyd.split(",");
+                String[] s = tofloyd.split(",");
                 x00 = Integer.parseInt(s[0]);
                 x01 = Integer.parseInt(s[1]);
                 ll2();
@@ -775,19 +848,19 @@ public class TestMatrixPublicNew {
         }
 
         public boolean f32() {
-            if(this.m4.contains(f1(x00,x01))) {
-                m3 = (m3 -20 <0) ? 0 : m3 -20;
-                for(String abc: m7.keySet()) {
-                    int beatles = m7.get(abc)-20 <0? 0 : m7.get(abc)-20;
-                    m7.put(abc,beatles);
+            if (this.m4.contains(f1(x00, x01))) {
+                m3 = (m3 - 20 < 0) ? 0 : m3 - 20;
+                for (String abc : m7.keySet()) {
+                    int beatles = m7.get(abc) - 20 < 0 ? 0 : m7.get(abc) - 20;
+                    m7.put(abc, beatles);
                 }
-                for(String abc: m6.keySet()) {
-                    if(m6.get(abc)<100) {
-                        int beatles = m6.get(abc)-20 <0? 0 : m6.get(abc)-20;
-                        m6.put(abc,beatles);
+                for (String abc : m6.keySet()) {
+                    if (m6.get(abc) < 100) {
+                        int beatles = m6.get(abc) - 20 < 0 ? 0 : m6.get(abc) - 20;
+                        m6.put(abc, beatles);
                     }
                 }
-                this.m4.remove(f1(x00,x01));
+                this.m4.remove(f1(x00, x01));
                 return true;
             }
             return false;
@@ -795,143 +868,37 @@ public class TestMatrixPublicNew {
 
         public void ll2() {
 
-            HashMap<String,Integer> newm7 = new HashMap<String,Integer>();
+            HashMap<String, Integer> newm7 = new HashMap<String, Integer>();
 
-            for(String abc: m6.keySet()) {
-                int beatles = m6.get(abc)+2;
-                if(beatles >= 100)  {
+            for (String abc : m6.keySet()) {
+                int beatles = m6.get(abc) + 2;
+                if (beatles >= 100) {
                     this.edu(abc);
-                    m6.put(abc,100);
-                }
-                else
-                    m6.put(abc,beatles);
+                    m6.put(abc, 100);
+                } else
+                    m6.put(abc, beatles);
             }
 
-            for(String abc: m7.keySet()) {
-                int beatles = m7.get(abc)+2;
-                if(beatles >= 100) {
+            for (String abc : m7.keySet()) {
+                int beatles = m7.get(abc) + 2;
+                if (beatles >= 100) {
                     this.edu(abc);
                     xyzw.add(abc);
-                }
-                else
-                    newm7.put(abc,beatles);
+                } else
+                    newm7.put(abc, beatles);
             }
             this.m7 = newm7;
         }
 
         public void edu(String abc) {
-            if(!this.m10.contains(abc))
+            if (!this.m10.contains(abc))
                 this.m10.add(abc);
         }
 
         public boolean grace() {
-            return !this.ll && this.m3<100 && this.m7.size() == 0
+            return !this.ll && this.m3 < 100 && this.m7.size() == 0
                     && this.xyzw.size() == 0 && this.x00 == this.x10
                     && this.x01 == this.x11;
         }
-    }
-
-
-    public static boolean applyPlan(String grid, String solution) {
-        String[] solutionArray  = solution.split(";");
-        String plan = solutionArray[0];
-        int blue = Integer.parseInt(solutionArray[1]);
-        int doors = Integer.parseInt(solutionArray[2]);
-
-        System.out.println(plan);
-        System.out.println(blue);
-        System.out.println(doors);
-
-        plan.replace(" ", "");
-        plan.replace("\n", "");
-        plan.replace("\r", "");
-        plan.replace("\n\r", "");
-        plan.replace("\t", "");
-
-        String[] actions = plan.split(",");
-
-        String[] gridArray=  grid.split(";");
-        String[] dimensions = gridArray[0].split(",");
-        int m = Integer.parseInt(dimensions[0]);
-        int n = Integer.parseInt(dimensions[1]);
-
-        int capacity = Integer.parseInt(gridArray[1]);
-
-        String[] neo = gridArray[2].split(",");
-        int x00 = Integer.parseInt(neo[0]);
-        int x01 = Integer.parseInt(neo[1]);
-
-        String[] booth = gridArray[3].split(",");
-        int x10 = Integer.parseInt(booth[0]);
-        int x11 = Integer.parseInt(booth[1]);
-
-        String[] ag = gridArray[4].split(",");
-        ArrayList<String> xyz = new ArrayList<String>();
-        for(int i = 0;i< ag.length -1; i+=2) {
-            xyz.add(ag[i]+","+ag[i+1]);
-        }
-
-        String[] pl = gridArray[5].split(",");
-        ArrayList<String> m4 = new ArrayList<String>();
-        for(int i = 0;i< pl.length -1; i+=2) {
-            m4.add(pl[i]+","+pl[i+1]);
-        }
-
-        String[] pas = gridArray[6].split(",");
-        HashMap<String,String> m5 = new HashMap<String,String>();
-        for(int i = 0;i< pas.length -3; i+=4) {
-            m5.put(pas[i]+","+pas[i+1],pas[i+2]+","+pas[i+3]);
-        }
-
-        String[] hstg = gridArray[7].split(",");
-        HashMap<String,Integer> m7 = new HashMap<String,Integer>();
-        for(int i = 0;i< hstg.length -2; i+=3) {
-            m7.put(hstg[i]+","+hstg[i+1],Integer.parseInt(hstg[i+2]));
-        }
-
-        TH s = new TH(m,n,x10,x11,x00, x01,capacity, xyz,m4,m5,m7);
-        boolean linkin = true;
-
-        for (int i = 0; i < actions.length; i++) {
-
-            switch (actions[i]) {
-                case "up":
-                    linkin = s.f2();
-                    break;
-                case "down":
-                    linkin = s.f3();
-                    break;
-                case "right":
-                    linkin = s.f4();
-                    break;
-                case "left":
-                    linkin = s.applyLeft();
-                    break;
-                case "carry":
-                    linkin = s.f209();
-                    break;
-                case "drop":
-                    linkin = s.f220();
-                    break;
-                case "fly":
-                    linkin = s.f320();
-                    break;
-                case "takePill":
-                    linkin = s.f32();
-                    break;
-                case "kill":
-                    linkin = s.f100();
-                    break;
-                default: linkin = false; break;
-
-            }
-
-            if(!linkin)
-                return false;
-
-
-
-        }
-        return s.grace() && s.m23 == doors && s.m10.size() == blue;
     }
 }

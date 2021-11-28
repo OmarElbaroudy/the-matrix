@@ -3,26 +3,28 @@ package modules;
 import services.InfoExtractor;
 
 public class Cost implements Comparable<Cost> {
-    //private int pills;
     private final short depth;
     private short kills;
     private byte drops;
+    private byte deaths;
 
     public Cost() {
-        kills = drops = 0;
+        kills = drops = deaths = 0;
         depth = 1;
     }
 
-    public Cost(Cost pathCost, Cost cost) {
+    public Cost(Cost pathCost, Cost cost, State s) {
         this.depth = (short) (pathCost.depth + cost.depth);
         this.kills = (short) (pathCost.kills + cost.kills);
         this.drops = (byte) (pathCost.drops + cost.drops);
+        this.updateDeaths(s);
     }
 
-    public Cost(int depth, int kills, int drops) {
+    public Cost(int depth, int kills, int drops, State s) {
         this.depth = (short) (depth);
         this.kills = (short) (kills);
         this.drops = (byte) (drops);
+        //this.updateDeaths(s);
     }
 
     public Cost drop(int x) {
@@ -47,7 +49,7 @@ public class Cost implements Comparable<Cost> {
         return this.kills;
     }
 
-    public int getAliveHostages(State state) {
+    private int getAliveHostages(State state) {
         return (int) state.getCarriedDamages().
                 stream().filter(x -> x < 100).count() +
                 getAliveHostagesInGrid(state.getGrid());
@@ -64,22 +66,22 @@ public class Cost implements Comparable<Cost> {
         return ret;
     }
 
-    public int getDeaths(State state) {
-        return InfoExtractor.numberOfHostages -
-                (this.drops + getAliveHostages(state));
+    private void updateDeaths(State state) {
+        this.deaths = (byte) (InfoExtractor.numberOfHostages -
+                (this.drops + getAliveHostages(state)));
     }
 
     @Override
     public int compareTo(Cost o) {
-        if (this.drops == o.drops
+        if (this.deaths == o.deaths
                 && this.kills == o.kills) {
             return this.depth - o.depth;
         }
 
-        if (drops == o.drops) {
+        if (deaths == o.deaths) {
             return this.kills - o.kills;
         }
 
-        return o.drops - this.drops;
+        return this.deaths - o.deaths;
     }
 }

@@ -12,6 +12,6 @@ public class AStarEvaluator extends Evaluator {
 
     @Override
     public Cost apply(Node node) {
-        return new Cost(node.getPathCost(), function.apply(node));
+        return new Cost(node.getPathCost(), function.apply(node), node.getState());
     }
 }
