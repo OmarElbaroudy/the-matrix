@@ -1,4 +1,4 @@
-package facade;
+package code;
 
 import modules.Node;
 import modules.State;
