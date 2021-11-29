@@ -19,6 +19,7 @@ public abstract class Operator {
     protected State getNextState(State cur) {
         int n = cur.getGrid().getN();
         int m = cur.getGrid().getM();
+        byte numOfAliveHostages = 0;
 
         Grid curGrid = cur.getGrid();
         Cell[][] newGrid = new Cell[n][m];
@@ -31,6 +32,7 @@ public abstract class Operator {
                     int damage = curGrid.getDamageAtPos(i, j);
 
                     if (damage + 2 < 100) {
+                        numOfAliveHostages++;
                         newGrid[i][j] = new Cell(damage + 2);
                     } else {
                         newGrid[i][j] = new Cell(Host.MUTATED_AGENT);
@@ -55,10 +57,12 @@ public abstract class Operator {
                         map(x -> (byte) Math.min(100, x + 2)).
                         collect(Collectors.toList());
 
+
         return new StateBuilder().
                 Grid(new Grid(newGrid)).
                 remCarry(cur.getRemCarry()).
                 damage(cur.getDamage()).
+                numOfAliveHostages(numOfAliveHostages).
                 carriedDamages(newCarriedDamages).
                 xPos(cur.getX()).
                 yPos(cur.getY()).

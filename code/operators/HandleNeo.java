@@ -120,16 +120,18 @@ public class HandleNeo extends Operator {
         int n = grid.getN(), m = grid.getM();
         Grid parentGrid = parent.getState().getGrid();
 
+        byte cnt = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                grid.heal(i, j, parentGrid.getDamageAtPos(i,j));
+                cnt += grid.heal(i, j, parentGrid.getDamageAtPos(i,j)) ? 1 : 0;
             }
         }
 
         cur.healNeo();
-        cur.healCarriedHostages();
+        cnt += cur.healCarriedHostages(parent.getState().getCarriedDamages());
 
         cur.clearPos(cur.getX(), cur.getY());
+        cur.updateAliveHostages(cnt);
         Operator operator = new HandleNeo(Operation.TAKE_PILL, new Cost());
         Node node = new Node(cur, parent, operator);
         return Collections.singletonList(node);

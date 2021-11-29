@@ -13,7 +13,7 @@ public class AStar extends UniformCost {
 
     public AStar(int i) {
         HeuristicFunction function =
-                (i == 1) ? new FirstFunction() : new SecondFunction();
+                (i == 1) ? new FirstFunction() : new FirstFunction();
         Evaluator evaluator = new AStarEvaluator(function);
         super.setQueue(new PriorityQueue<>(new NodeComparator(evaluator)));
     }

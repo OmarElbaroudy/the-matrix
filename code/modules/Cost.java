@@ -20,11 +20,10 @@ public class Cost implements Comparable<Cost> {
         this.updateDeaths(s);
     }
 
-    public Cost(int depth, int kills, int drops, State s) {
+    public Cost(int depth, int kills, int drops) {
         this.depth = (short) (depth);
         this.kills = (short) (kills);
         this.drops = (byte) (drops);
-        //this.updateDeaths(s);
     }
 
     public Cost drop(int x) {
@@ -51,8 +50,8 @@ public class Cost implements Comparable<Cost> {
 
     private int getAliveHostages(State state) {
         return (int) state.getCarriedDamages().
-                stream().filter(x -> x < 100).count() +
-                getAliveHostagesInGrid(state.getGrid());
+                stream().filter(x -> x < 100).count()
+                + state.aliveHostages();
     }
 
     private int getAliveHostagesInGrid(Grid grid) {

@@ -9,7 +9,7 @@ public class GraphHandler {
     private final TreeMap<Pair, Integer> mp;
     private final ArrayList<ArrayList<Integer>> adj;
     private final List<Cell> cells;
-    private int TBIdx;
+    private int TBIdx, numOfAliveHostages, distToTB, pills;
 
     public GraphHandler(State state) {
         this.N = state.getGrid().getN();
@@ -36,6 +36,10 @@ public class GraphHandler {
                 Host type = grid.getHostAtPos(i, j);
                 if (type == Host.TELEPHONE) {
                     this.TBIdx = idx;
+                } else if (type == Host.HOSTAGE) {
+                    this.numOfAliveHostages++;
+                }else if(type == Host.PILL){
+                    this.pills++;
                 }
 
                 mp.put(new Pair(i, j), idx++);
@@ -105,12 +109,13 @@ public class GraphHandler {
             if (type == Host.HOSTAGE) {
                 int d = dist[i];
                 int damage = cells.get(i).getDamage();
-                cnt += damage + d * 2 >= 100 ? 1 : 0;
+                cnt += damage + d * 2 - pills * 20 >= 100 ? 1 : 0;
             }
 
             cnt += type == Host.MUTATED_AGENT ? 1 : 0;
         }
 
+        this.distToTB = dist[TBIdx];
         return cnt;
     }
 
@@ -124,9 +129,15 @@ public class GraphHandler {
             int u = q.remove();
             vis[u] = true;
             Host type = cells.get(u).getHost();
+
+            if (type == Host.MUTATED_AGENT || type == Host.AGENT) {
+                continue;
+            }
+
             if (type == Host.TELEPHONE) {
                 return true;
             }
+
             for (int v : adj.get(u)) {
                 if (!vis[v]) {
                     q.add(v);
@@ -152,11 +163,7 @@ public class GraphHandler {
     }
 
     public int getDepth() {
-        int cnt = (int) cells.stream().
-                filter(cell -> cell.getHost() == Host.HOSTAGE).count();
-
-        if (cnt != 0) return cnt;
-        return getShortestDist(neoIdx)[TBIdx];
+        return this.distToTB == 0 && numOfAliveHostages == 0 ? 0 : 1;
     }
 
     public void print() {

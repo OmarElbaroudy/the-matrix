@@ -3,10 +3,12 @@ package modules;
 import java.util.List;
 
 public class StateBuilder {
+
+    Grid grid;
     byte x, y;
     byte damage;
     byte remCarry;
-    Grid grid;
+    byte numOfAliveHostages;
     List<Byte> carriedDamages;
 
     public StateBuilder xPos(int x) {
@@ -26,6 +28,11 @@ public class StateBuilder {
 
     public StateBuilder remCarry(int remCarry) {
         this.remCarry = (byte) remCarry;
+        return this;
+    }
+
+    public StateBuilder numOfAliveHostages(int numOfAliveHostages) {
+        this.numOfAliveHostages = (byte) numOfAliveHostages;
         return this;
     }
 

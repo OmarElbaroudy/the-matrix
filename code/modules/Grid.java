@@ -41,7 +41,7 @@ public class Grid {
         grid[x][y] = new Cell(Host.EMPTY);
     }
 
-    public void heal(int x, int y, int damage) {
-        grid[x][y].heal(damage);
+    public boolean heal(int x, int y, int damage) {
+        return grid[x][y].heal(damage);
     }
 }
