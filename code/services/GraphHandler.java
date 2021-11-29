@@ -9,7 +9,7 @@ public class GraphHandler {
     private final TreeMap<Pair, Integer> mp;
     private final ArrayList<ArrayList<Integer>> adj;
     private final List<Cell> cells;
-    private int TBIdx, numOfAliveHostages, distToTB, pills;
+    private int TBIdx, numOfAliveHostages, distToTB, pills, minDist;
 
     public GraphHandler(State state) {
         this.N = state.getGrid().getN();
@@ -38,7 +38,7 @@ public class GraphHandler {
                     this.TBIdx = idx;
                 } else if (type == Host.HOSTAGE) {
                     this.numOfAliveHostages++;
-                }else if(type == Host.PILL){
+                } else if (type == Host.PILL) {
                     this.pills++;
                 }
 
@@ -119,6 +119,27 @@ public class GraphHandler {
         return cnt;
     }
 
+    public int getHostageKills2() {
+        int cnt = 0;
+        minDist = 100000;
+        int[] dist = getShortestDist(TBIdx);
+        for (int i = 0; i < N * M; i++) {
+            Host type = cells.get(i).getHost();
+            if (type == Host.MUTATED_AGENT) {
+                cnt++;
+                minDist = Math.min(minDist, dist[i]);
+            }
+        }
+
+        minDist = minDist == 100000 ? 0 : minDist;
+        this.distToTB = dist[neoIdx];
+        return cnt;
+    }
+
+    public int minDistFromMAsToTB() {
+        return minDist;
+    }
+
     public boolean canReachTB() {
         boolean[] vis = new boolean[N * M];
 
@@ -151,14 +172,16 @@ public class GraphHandler {
         int cnt = 0;
         int[] fst = getShortestDist(neoIdx);
         int[] snd = getShortestDist(TBIdx);
+        this.distToTB = fst[TBIdx];
 
         for (int i = 0; i < N * M; i++) {
             if (cells.get(i).getHost() == Host.HOSTAGE) {
                 int damage = cells.get(i).getDamage();
                 damage += 2 * (fst[i] + snd[i]) + 1;
-                cnt += damage <= 100 ? 1 : 0;
+                cnt += damage - 20 * pills <= 100 ? 1 : 0;
             }
         }
+
         return cnt;
     }
 

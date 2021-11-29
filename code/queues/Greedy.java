@@ -15,7 +15,7 @@ public class Greedy extends UniformCost {
 
     public Greedy(int i) {
         HeuristicFunction function =
-                (i == 1) ? new FirstFunction() : new FirstFunction();
+                (i == 1) ? new FirstFunction() : new SecondFunction();
         Evaluator evaluator = new GreedyEvaluator(function);
         super.setQueue(pq = new PriorityQueue<>(new NodeComparator(evaluator)));
     }

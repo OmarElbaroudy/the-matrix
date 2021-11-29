@@ -17,6 +17,7 @@ public class Cost implements Comparable<Cost> {
         this.depth = (short) (pathCost.depth + cost.depth);
         this.kills = (short) (pathCost.kills + cost.kills);
         this.drops = (byte) (pathCost.drops + cost.drops);
+        this.drops = (byte) Math.min(drops, InfoExtractor.numberOfHostages);
         this.updateDeaths(s);
     }
 
@@ -68,6 +69,7 @@ public class Cost implements Comparable<Cost> {
     private void updateDeaths(State state) {
         this.deaths = (byte) (InfoExtractor.numberOfHostages -
                 (this.drops + getAliveHostages(state)));
+        this.deaths = (byte) Math.max(deaths, 0);
     }
 
     @Override
@@ -83,4 +85,5 @@ public class Cost implements Comparable<Cost> {
 
         return this.deaths - o.deaths;
     }
+
 }

@@ -31,6 +31,10 @@ public class TestMatrixPublicNew {
         int blue = Integer.parseInt(solutionArray[1]);
         int doors = Integer.parseInt(solutionArray[2]);
 
+        System.out.println(plan);
+        System.out.println(blue);
+        System.out.println(doors);
+
         plan.replace(" ", "");
         plan.replace("\n", "");
         plan.replace("\r", "");
@@ -148,7 +152,7 @@ public class TestMatrixPublicNew {
 
     @Test(timeout = 10000)
     public void testa3() throws Exception {
-        String solution = Main.solve(grid3, "BF", false);
+        String solution = Main.solve(grid3, "BF", true);
         solution = solution.replace(" ", "");
         assertTrue("The output actions do not lead to a goal state.", applyPlan(grid3, solution));
     }
