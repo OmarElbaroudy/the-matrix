@@ -8,7 +8,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import facade.Matrix;
+import code.Matrix;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
