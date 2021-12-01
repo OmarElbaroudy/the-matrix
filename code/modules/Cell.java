@@ -38,11 +38,14 @@ public class Cell {
         return toY;
     }
 
-    public void heal(int parentDamage) {
+    public boolean heal(int parentDamage) {
+        boolean flag = false;
         if (this.host == Host.MUTATED_AGENT &&
                 (parentDamage == 98 || parentDamage == 99)) {
             this.host = Host.HOSTAGE;
+            flag = true;
         }
         this.damage = (byte) Math.max(0, parentDamage - 20);
+        return flag;
     }
 }

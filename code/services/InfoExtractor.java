@@ -4,8 +4,8 @@ import java.util.Arrays;
 
 public class InfoExtractor {
 
-    private static String[] arrOfStr;
     public static int numberOfHostages;
+    private static String[] arrOfStr;
 
     public InfoExtractor(String Grid) {
         arrOfStr = Grid.split(";");
@@ -141,8 +141,7 @@ public class InfoExtractor {
     private int[] getHostages() {
         int[] arr = Arrays.stream(arrOfStr[7].split(",")).
                 mapToInt(Integer::parseInt).toArray();
-        numberOfHostages = (int) Math.ceil(arr.length/3);
-        System.out.println(numberOfHostages);
+        numberOfHostages = (arr.length + 2) / 3;
         return arr;
     }
 

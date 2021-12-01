@@ -1,11 +1,8 @@
 package modules;
 
-import facade.Matrix;
 import services.InfoExtractor;
-import services.VisualsHandler;
 
 public class Cost implements Comparable<Cost> {
-    //private int pills;
     private final short depth;
     private short kills;
     private byte drops;
@@ -16,13 +13,18 @@ public class Cost implements Comparable<Cost> {
         depth = 1;
     }
 
-    public Cost(Cost pathCost, Cost cost) {
+    public Cost(Cost pathCost, Cost cost, State s) {
         this.depth = (short) (pathCost.depth + cost.depth);
         this.kills = (short) (pathCost.kills + cost.kills);
         this.drops = (byte) (pathCost.drops + cost.drops);
-//        this.deaths = (byte) ((pathCost.deaths + cost.deaths));
-//        this.deaths=(pathCost.deaths);
+        this.drops = (byte) Math.min(drops, InfoExtractor.numberOfHostages);
+        this.updateDeaths(s);
+    }
 
+    public Cost(int depth, int kills, int drops) {
+        this.depth = (short) (depth);
+        this.kills = (short) (kills);
+        this.drops = (byte) (drops);
     }
 
     public Cost drop(int x) {
@@ -47,10 +49,10 @@ public class Cost implements Comparable<Cost> {
         return this.kills;
     }
 
-    public int getAliveHostages(State state) {
+    private int getAliveHostages(State state) {
         return (int) state.getCarriedDamages().
-                stream().filter(x -> x < 100).count() +
-                getAliveHostagesInGrid(state.getGrid());
+                stream().filter(x -> x < 100).count()
+                + state.aliveHostages();
     }
 
     private int getAliveHostagesInGrid(Grid grid) {
@@ -64,15 +66,10 @@ public class Cost implements Comparable<Cost> {
         return ret;
     }
 
-    public int getDeaths(State state) {
-    	
-//    	deaths= VisualsHandler.getDeaths(state,);
-    	
-       deaths = (byte)( InfoExtractor.numberOfHostages -
-                ((this.drops) + getAliveHostages(state)));
-//       System.out.println("deaths: "+this.deaths);
-       return deaths;
-       
+    private void updateDeaths(State state) {
+        this.deaths = (byte) (InfoExtractor.numberOfHostages -
+                (this.drops + getAliveHostages(state)));
+        this.deaths = (byte) Math.max(deaths, 0);
     }
 
     @Override
@@ -86,9 +83,7 @@ public class Cost implements Comparable<Cost> {
             return this.kills - o.kills;
         }
 
-        return this.deaths-o.deaths ;
+        return this.deaths - o.deaths;
     }
-    public String toString() {
-    	return "death:"+ this.deaths+" kills: "+this.kills+" depth: "+this.depth+ " drops: "+drops;
-    }
+
 }

@@ -19,5 +19,4 @@ public class Greedy extends UniformCost {
         Evaluator evaluator = new GreedyEvaluator(function);
         super.setQueue(pq = new PriorityQueue<>(new NodeComparator(evaluator)));
     }
-
 }

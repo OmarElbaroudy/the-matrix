@@ -10,6 +10,7 @@ public class State implements Comparable<State> {
     private final Grid grid;
     private byte damage;
     private byte remCarry;
+    private byte numOfAliveHostages;
     private byte x, y;
 
     public State(StateBuilder builder) {
@@ -19,6 +20,7 @@ public class State implements Comparable<State> {
         this.remCarry = builder.remCarry;
         this.grid = builder.grid;
         this.carriedDamages = builder.carriedDamages;
+        this.numOfAliveHostages = builder.numOfAliveHostages;
     }
 
     public void move(int dx, int dy) {
@@ -38,13 +40,12 @@ public class State implements Comparable<State> {
         grid.clearPos(x, y);
     }
 
-    public int drop() {
-        int cnt = (int) this.carriedDamages.
-                stream().filter(x -> x < 100).count();
-
+    public int drop(List<Byte> prevCarriedDamages) {
+        remCarry += this.carriedDamages.size();
         this.carriedDamages.clear();
-        remCarry += cnt;
-        return cnt;
+
+        return (int) prevCarriedDamages.
+                stream().filter(x -> x < 100).count();
     }
 
     public void clearPos(int x, int y) {
@@ -55,12 +56,15 @@ public class State implements Comparable<State> {
         this.damage = (byte) Math.max(0, damage - 20);
     }
 
-    public void healCarriedHostages() {
-        for (int i = 0; i < this.carriedDamages.size(); i++) {
-            int x = carriedDamages.get(i);
+    public byte healCarriedHostages(List<Byte> damages) {
+        byte cnt = 0;
+        for (int i = 0; i < damages.size(); i++) {
+            int x = damages.get(i);
+            if (x == 99 || x == 98) cnt += 1;
             if (x == 100) continue;
-            carriedDamages.set(i, (byte) Math.max(0, x - 22));
+            carriedDamages.set(i, (byte) Math.max(0, x - 20));
         }
+        return cnt;
     }
 
     public boolean kill() {
@@ -92,6 +96,9 @@ public class State implements Comparable<State> {
         return carriedDamages;
     }
 
+    public byte aliveHostages() {
+        return numOfAliveHostages;
+    }
 
     @Override
     public String toString() {
@@ -137,5 +144,9 @@ public class State implements Comparable<State> {
         }
 
         return 0;
+    }
+
+    public void updateAliveHostages(byte cnt) {
+        this.numOfAliveHostages += cnt;
     }
 }
