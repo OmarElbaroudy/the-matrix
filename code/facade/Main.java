@@ -1,6 +1,6 @@
-package code;
+package facade;
 
-import static code.Matrix.solve;
+import static facade.Matrix.solve;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package code;
+package facade;
 
 import modules.Grid;
 import modules.Host;

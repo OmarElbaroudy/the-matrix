@@ -1,6 +1,6 @@
 package services;
 
-import code.Problem;
+import facade.Problem;
 import modules.Node;
 import modules.State;
 import operators.Operation;
