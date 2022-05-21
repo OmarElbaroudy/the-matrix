@@ -109,7 +109,7 @@ public class GridHandler {
             appendHostages(sb, q, damage, i == pads - 1);
         }
 
-        return sb.toString();
+        return sb.substring(0,sb.length()-1).toString();
     }
 
     private static void append(StringBuilder sb,
