@@ -1,6 +1,6 @@
 # TheMatrix
 An AI agent, Neo, uses various search algorithms to formulate a plan to rescue hostages in a grid-based game, while minimizing the number of hostages killed.
-Neo's decision making is optimized through the use of heurisitc functions.
+Neo's decision making is optimized through the use of heurisitic functions.
 
 ## Introduction
 In our problem, we have an n*m grid The area the hostages are held in can be thought of as an m × n grid of cells where 5 <= m, n <=15. Initially, a grid cell is either free or contains one of the following: Neo, a hostage, a pill, a pad, an agent, or the telephone booth. The Hostages have an initial damage that increase with time, and Neo’s damage increase with any kill action that he performs on Agents, but Neo can take a Pill to reduce the damage taken by him and the Hostages by 20, and the Pads are used to let Neo fly from one Pad to the other. The objective of our search problem is to let Neo find a way to rescue the hostages by escorting them to the Telephone Booth while trying to minimize the number of agents killed, in addition to killing any hostage who dies as they turn into mutated agents.
